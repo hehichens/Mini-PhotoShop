@@ -17,4 +17,6 @@ using namespace std;
 
 Mat rotate(Mat src, int mode);
 
+Mat resize_img(Mat src, int k);
+
 #endif // ROTATE_H

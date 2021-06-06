@@ -220,14 +220,14 @@ void main_window::setMainButtons()
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Show_Rotate_Button()));
 
     //crop
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Show_crop()));
-    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Tool_crop()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Show_crop()));
+    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Tool_crop()));
 
     //black_white
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Tool_blackwhite()));
@@ -301,6 +301,19 @@ void main_window::setMainButtons()
  */
 void main_window::setAddition()
 {
+    //crop
+    ui->horizontalLayout->addWidget(spinBox_crop);
+    ui->horizontalLayout->addWidget(slider_crop);
+
+    spinBox_crop->setRange(0, 100);
+    slider_crop->setRange(0, 100);
+
+    connect(spinBox_crop, SIGNAL(valueChanged(int)), slider_crop, SLOT(setValue(int)));
+    connect(slider_crop, SIGNAL(valueChanged(int)), spinBox_crop, SLOT(setValue(int)));
+    
+    spinBox_crop->setVisible(false);
+    slider_crop->setVisible(false);
+
     //black & white
     ui->horizontalLayout->addWidget(binary_Button);
     ui->horizontalLayout->addWidget(otsu_Button);
@@ -386,11 +399,11 @@ void main_window::setAddition()
     slider_saturation->setVisible(false);
 
     //crop
-    ui->horizontalLayout->addWidget(crop_Button);
-    crop_Button->setButtonPicture(confirm_Img);
-    crop_Button->setPressPicture(confirm_PressImg);
-    crop_Button->setButtonSize(30, 30);
-    crop_Button->setVisible(false);
+    // ui->horizontalLayout->addWidget(crop_Button);
+    // crop_Button->setButtonPicture(confirm_Img);
+    // crop_Button->setPressPicture(confirm_PressImg);
+    // crop_Button->setButtonSize(30, 30);
+    // crop_Button->setVisible(false);
 
     //rotate
     ui->horizontalLayout->addWidget(LeftRotate_Button);
@@ -859,10 +872,10 @@ void main_window::Set_Tool()
     ui->scrollAreaWidgetContents_Tool->setLayout(Vlayout_Tool);
 
     // Crop
-    // Vlayout_Tool->addWidget(tool_button_CP, 0, Qt::AlignCenter);
-    // tool_button_CP->setButtonSize(90, 80);
-    // tool_button_CP->setButtonPicture(Crop_Img);
-    // tool_button_CP->setPressPicture(Crop_PressImg);
+    Vlayout_Tool->addWidget(tool_button_CP, 0, Qt::AlignCenter);
+    tool_button_CP->setButtonSize(90, 80);
+    tool_button_CP->setButtonPicture(Crop_Img);
+    tool_button_CP->setPressPicture(Crop_PressImg);
     
     // Rotate
     Vlayout_Tool->addWidget(tool_button_RT, 0, Qt::AlignCenter);
@@ -992,11 +1005,15 @@ void main_window::Show_Saturation_Slider()
 
 void main_window::Hide_crop()
 {
-    crop_Button->setVisible(false);
+    spinBox_crop->setVisible(false);
+    slider_crop->setVisible(false);
+    //crop_Button->setVisible(false);
 }
 void main_window::Show_crop()
 {
-    crop_Button->setVisible(true);
+    spinBox_crop->setVisible(true);
+    slider_crop->setVisible(true);
+    //crop_Button->setVisible(true);
 }
 
 void main_window::Hide_FilterColor_Button()
@@ -1069,8 +1086,12 @@ void main_window::Tool_blackwhite()
  */
 void main_window::Tool_crop()
 {
-    connect(crop_Button, SIGNAL(clicked()), this, SLOT(display_graphscreen()));
-    main_screen->set_m_crop(true);
+    spinBox_crop->disconnect(this);
+    slider_crop->disconnect(this);
+    Temp_main_pic = QImage2cvMat(*main_pic).clone();
+    spinBox_crop->setValue(50);
+    connect(spinBox_crop, SIGNAL(valueChanged(int)), this, SLOT(temp_crop()));
+    
 }
 
 /*
@@ -1080,6 +1101,14 @@ void main_window::Tool_crop()
  * will be called to invoking brightness function and
  * adjuest the brightness of the picture
  */
+void main_window::temp_crop()
+{
+    int k = spinBox_crop->value();
+    Mat crop_img = resize_img(Temp_main_pic, k);
+    *main_pic = cvMat2QImage(crop_img);
+    display_screen();
+}
+
 void main_window::temp_blackwhite()
 {
     int bw_value = spinBox_bw->value();
@@ -2126,6 +2155,8 @@ void main_window::initialization()
 {
     spinBox_bw->disconnect(this);
     slider_bw->disconnect(this);
+    spinBox_crop->disconnect(this);
+    slider_crop->disconnect(this);
     spinBox1->disconnect(this);
     slider1->disconnect(this);
     spinBox2->disconnect(this);
@@ -2141,6 +2172,7 @@ void main_window::initialization()
     spinBox_eye->disconnect(this);
     slider_eye->disconnect(this);
     spinBox_bw->setValue(0);
+    spinBox_crop->setValue(50);
     spinBox1->setValue(50);
     spinBox2->setValue(0);
     spinBox_blur->setValue(0);
@@ -2152,7 +2184,7 @@ void main_window::initialization()
     main_screen->set_m_mosaic(false);
     spinBoxText->disconnect(this);
     textEdt->disconnect(this);
-    crop_Button->disconnect(this);
+    //crop_Button->disconnect(this);
 }
 
 //text function part

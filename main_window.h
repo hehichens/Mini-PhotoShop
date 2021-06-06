@@ -248,6 +248,10 @@ private:
     int redostack_count = 0;
 
     /*inside Tool*/
+    //crop
+    QSpinBox *spinBox_crop = new QSpinBox();
+    QSlider *slider_crop = new QSlider(Qt::Horizontal);
+
     //B&W
     QPushButton *binary_Button = new QPushButton();
     QPushButton *otsu_Button = new QPushButton();
@@ -291,9 +295,9 @@ private:
     QSpinBox *spinBox_blur = new QSpinBox();
     QSlider *slider_blur = new QSlider(Qt::Horizontal);
     //crop
-    Button *crop_Button = new Button();
-    QPixmap *confirm_Img = new QPixmap(":/images/crop_confirm.png");
-    QPixmap *confirm_PressImg = new QPixmap(":/images/crop_confirm_press.png");
+    //Button *crop_Button = new Button();
+    //QPixmap *confirm_Img = new QPixmap(":/images/crop_confirm.png");
+    //QPixmap *confirm_PressImg = new QPixmap(":/images/crop_confirm_press.png");
 
     /*Sticker*/
     QLineEdit *basic_sticker_label = new QLineEdit();
@@ -405,6 +409,7 @@ private slots:
     void Tool_saturation();
     void Tool_rotate();
     void Tool_crop();
+    void temp_crop();
     void Tool_blur();
     void temp_blur();
 

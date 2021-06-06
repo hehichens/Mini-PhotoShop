@@ -36,3 +36,12 @@ Mat rotate(Mat src, int mode)  {
         break;
     }
 }
+
+
+Mat resize_img(Mat src, int k){
+    Mat dst;
+    float ratio = (float) k / 100;
+    cout<<"ratio: "<<ratio<<endl;
+    resize(src, dst, Size(), ratio, ratio, INTER_CUBIC);
+    return dst;
+}
