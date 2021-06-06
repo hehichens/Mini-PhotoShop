@@ -76,15 +76,16 @@ void main_window::setMainButtons()
     close_Button->setIconSize(QSize(30, 30));
     changeSize_Button->setIconSize(QSize(30, 30));
 
+    /*main*/
     ui->verticalLayout_4->addWidget(Tool_Button);
     ui->verticalLayout_4->addWidget(Filter_Button);
-    ui->verticalLayout_4->addWidget(Sticker_Button);
+    // ui->verticalLayout_4->addWidget(Sticker_Button);
     ui->verticalLayout_4->addWidget(Text_Button);
-    ui->verticalLayout_4->addWidget(Bigeye_Button);
+    // ui->verticalLayout_4->addWidget(Bigeye_Button);
     ui->verticalLayout_4->addWidget(Frame_Button);
     ui->verticalLayout_4->addWidget(Mosaic_Button);
     ui->verticalLayout_4->addWidget(Colorchange_Button);
-    ui->verticalLayout_4->addWidget(Collage_Button);
+    // ui->verticalLayout_4->addWidget(Collage_Button);
 
     ui->scrollArea->setFixedSize(QSize(120, 170));
     ui->widget_2->setFixedSize(QSize(120, 170));
@@ -102,12 +103,12 @@ void main_window::setMainButtons()
 
     Filter_Button->setButtonPicture(Filter_Img);
     Filter_Button->setPressPicture(Filter_PressImg);
-    Sticker_Button->setButtonPicture(Sticker_Img);
-    Sticker_Button->setPressPicture(Sticker_PressImg);
+    // Sticker_Button->setButtonPicture(Sticker_Img);
+    // Sticker_Button->setPressPicture(Sticker_PressImg);
     Text_Button->setButtonPicture(Text_Img);
     Text_Button->setPressPicture(Text_PressImg);
-    Bigeye_Button->setButtonPicture(Bigeye_Img);
-    Bigeye_Button->setPressPicture(Bigeye_PressImg);
+    // Bigeye_Button->setButtonPicture(Bigeye_Img);
+    // Bigeye_Button->setPressPicture(Bigeye_PressImg);
 
     Frame_Button->setButtonPicture(Frame_Img);
     Frame_Button->setPressPicture(Frame_PressImg);
@@ -116,8 +117,8 @@ void main_window::setMainButtons()
     Mosaic_Button->setPressPicture(Mosaic_PressImg);
     Colorchange_Button->setButtonPicture(BackColor_Img);
     Colorchange_Button->setPressPicture(BackColor_PressImg);
-    Collage_Button->setButtonPicture(Collage_Img);
-    Collage_Button->setPressPicture(Collage_PressImg);
+    // Collage_Button->setButtonPicture(Collage_Img);
+    // Collage_Button->setPressPicture(Collage_PressImg);
 
     Undo_Button->setButtonPicture(undo_Img);
     Undo_Button->setPressPicture(undo_PressImg);
@@ -152,57 +153,57 @@ void main_window::setMainButtons()
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_background()));
     connect(return_Button, SIGNAL(released()), this, SLOT(ButtonShow()));
-    connect(return_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(return_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_text()));
     connect(return_Button, SIGNAL(released()), this, SLOT(initialization()));
 
     connect(Tool_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
-    connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
     connect(Tool_Button, SIGNAL(released()), this, SLOT(Hide_text()));
     connect(Tool_Button, SIGNAL(released()), this, SLOT(Show_Tool()));
 
     connect(Filter_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
-    connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
     connect(Filter_Button, SIGNAL(released()), this, SLOT(Hide_text()));
     connect(Filter_Button, SIGNAL(released()), this, SLOT(Show_Filter()));
 
-    connect(Sticker_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
+    // connect(Sticker_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
     connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
-    connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
-    connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_text()));
-    connect(Sticker_Button, SIGNAL(released()), this, SLOT(Show_Sticker()));
+    // connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
+    // connect(Sticker_Button, SIGNAL(released()), this, SLOT(Hide_text()));
+    // connect(Sticker_Button, SIGNAL(released()), this, SLOT(Show_Sticker()));
 
-    connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Show_eyeSlider()));
-    connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
-    connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Hide_text()));
-    connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Big_eye()));
+    // connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Show_eyeSlider()));
+    // connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
+    // connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Hide_text()));
+    // connect(Bigeye_Button, SIGNAL(released()), this, SLOT(Big_eye()));
 
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
-    connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Hide_text()));
     connect(Mosaic_Button, SIGNAL(released()), this, SLOT(Show_Mosaic()));
 
     connect(Frame_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
-    connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
     connect(Frame_Button, SIGNAL(released()), this, SLOT(Hide_text()));
     connect(Frame_Button, SIGNAL(released()), this, SLOT(Show_Frame()));
 
-    connect(Collage_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
-    connect(Collage_Button, SIGNAL(released()), this, SLOT(Hide_text()));
-    connect(Collage_Button, SIGNAL(released()), this, SLOT(Show_collageButton()));
-    connect(Collage_Button, SIGNAL(released()), this, SLOT(Collage()));
+    // connect(Collage_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Collage_Button, SIGNAL(released()), this, SLOT(Hide_text()));
+    // connect(Collage_Button, SIGNAL(released()), this, SLOT(Show_collageButton()));
+    // connect(Collage_Button, SIGNAL(released()), this, SLOT(Collage()));
 
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(ButtonHide()));
-    connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_text()));
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
     connect(Colorchange_Button, SIGNAL(released()), this, SLOT(Show_background()));
 
-    connect(Text_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
+    // connect(Text_Button, SIGNAL(released()), this, SLOT(Hide_eyeSlider()));
     connect(Text_Button, SIGNAL(released()), this, SLOT(Hide_collageButton()));
     connect(Text_Button, SIGNAL(released()), this, SLOT(Show_text()));
     connect(Text_Button, SIGNAL(released()), this, SLOT(text()));
@@ -305,8 +306,8 @@ void main_window::setAddition()
     ui->horizontalLayout->addWidget(spinBox_crop);
     ui->horizontalLayout->addWidget(slider_crop);
 
-    spinBox_crop->setRange(0, 100);
-    slider_crop->setRange(0, 100);
+    spinBox_crop->setRange(1, 100);
+    slider_crop->setRange(1, 100);
 
     connect(spinBox_crop, SIGNAL(valueChanged(int)), slider_crop, SLOT(setValue(int)));
     connect(slider_crop, SIGNAL(valueChanged(int)), spinBox_crop, SLOT(setValue(int)));
@@ -503,14 +504,14 @@ void main_window::setAddition()
     connect(sticker7, SIGNAL(released()), this, SLOT(Sticker_Add()));
 
     //big eye
-    ui->horizontalLayout->addWidget(spinBox_eye);
-    ui->horizontalLayout->addWidget(slider_eye);
-    spinBox_eye->setRange(0, 15);
-    slider_eye->setRange(0, 15);
-    connect(spinBox_eye, SIGNAL(valueChanged(int)), slider_eye, SLOT(setValue(int)));
-    connect(slider_eye, SIGNAL(valueChanged(int)), spinBox_eye, SLOT(setValue(int)));
-    spinBox_eye->setVisible(false);
-    slider_eye->setVisible(false);
+    // ui->horizontalLayout->addWidget(spinBox_eye);
+    // ui->horizontalLayout->addWidget(slider_eye);
+    // spinBox_eye->setRange(0, 15);
+    // slider_eye->setRange(0, 15);
+    // connect(spinBox_eye, SIGNAL(valueChanged(int)), slider_eye, SLOT(setValue(int)));
+    // connect(slider_eye, SIGNAL(valueChanged(int)), spinBox_eye, SLOT(setValue(int)));
+    // spinBox_eye->setVisible(false);
+    // slider_eye->setVisible(false);
 
     //text
     ui->horizontalLayout->addWidget(textEdt);
@@ -639,13 +640,13 @@ void main_window::ButtonHide()
 {
     Tool_Button->setVisible(false);
     Filter_Button->setVisible(false);
-    Sticker_Button->setVisible(false);
+    // Sticker_Button->setVisible(false);
     Text_Button->setVisible(false);
-    Bigeye_Button->setVisible(false);
+    // Bigeye_Button->setVisible(false);
     Mosaic_Button->setVisible(false);
     Frame_Button->setVisible(false);
     Colorchange_Button->setVisible(false);
-    Collage_Button->setVisible(false);
+    // Collage_Button->setVisible(false);
 }
 
 /*
@@ -657,13 +658,13 @@ void main_window::ButtonShow()
 {
     Tool_Button->setVisible(true);
     Filter_Button->setVisible(true);
-    Sticker_Button->setVisible(true);
+    // Sticker_Button->setVisible(true);
     Text_Button->setVisible(true);
-    Bigeye_Button->setVisible(true);
+    // Bigeye_Button->setVisible(true);
     Mosaic_Button->setVisible(true);
     Frame_Button->setVisible(true);
     Colorchange_Button->setVisible(true);
-    Collage_Button->setVisible(true);
+    // Collage_Button->setVisible(true);
 }
 
 /*
@@ -1485,33 +1486,33 @@ void main_window::temp_StickerAdd()
  * ------------------------------------------------
  * Allow hide or show of components for Big eye function.
  */
-void main_window::Show_eyeSlider()
-{
-    spinBox_eye->setVisible(true);
-    spinBox_eye->setValue(0);
-    slider_eye->setVisible(true);
-}
-void main_window::Hide_eyeSlider()
-{
-    spinBox_eye->setVisible(false);
-    slider_eye->setVisible(false);
-    spinBox_eye->disconnect(this);
-    slider_eye->disconnect(this);
-}
+// void main_window::Show_eyeSlider()
+// {
+//     spinBox_eye->setVisible(true);
+//     spinBox_eye->setValue(0);
+//     slider_eye->setVisible(true);
+// }
+// void main_window::Hide_eyeSlider()
+// {
+//     spinBox_eye->setVisible(false);
+//     slider_eye->setVisible(false);
+//     spinBox_eye->disconnect(this);
+//     slider_eye->disconnect(this);
+// }
 
 /*
  * Implementation notes:temp_BigEye()
  * ------------------------------------------------
  * get sticker size and invoking eyesBigger function.
  */
-void main_window::temp_BigEye()
-{
-    float eyeSize_value = float(spinBox_eye->value()) / 100 + 1;
-    Mat bigEye_img;
-    bigEye_img = eyesBigger(Temp_main_pic, eyeSize_value);
-    *main_pic = cvMat2QImage(bigEye_img);
-    display_screen();
-}
+// void main_window::temp_BigEye()
+// {
+//     float eyeSize_value = float(spinBox_eye->value()) / 100 + 1;
+//     Mat bigEye_img;
+//     bigEye_img = eyesBigger(Temp_main_pic, eyeSize_value);
+//     *main_pic = cvMat2QImage(bigEye_img);
+//     display_screen();
+// }
 
 /*
  * Implementation notes:Big_eye()
@@ -1519,13 +1520,13 @@ void main_window::temp_BigEye()
  * save the current picture
  * connect signal and slot.
  */
-void main_window::Big_eye()
-{
-    spinBox_eye->disconnect(this);
-    slider_eye->disconnect(this);
-    Temp_main_pic = QImage2cvMat(*main_pic).clone();
-    connect(spinBox_eye, SIGNAL(valueChanged(int)), this, SLOT(temp_BigEye()));
-}
+// void main_window::Big_eye()
+// {
+//     spinBox_eye->disconnect(this);
+//     slider_eye->disconnect(this);
+//     Temp_main_pic = QImage2cvMat(*main_pic).clone();
+//     connect(spinBox_eye, SIGNAL(valueChanged(int)), this, SLOT(temp_BigEye()));
+// }
 
 //Mosaic function part
 /*
@@ -2167,10 +2168,10 @@ void main_window::initialization()
     slider_saturation->disconnect(this);
     spinBox_sticker->disconnect(this);
     slider_sticker->disconnect(this);
-    spinBox_eye->disconnect(this);
-    slider_eye->disconnect(this);
-    spinBox_eye->disconnect(this);
-    slider_eye->disconnect(this);
+    // spinBox_eye->disconnect(this);
+    // slider_eye->disconnect(this);
+    // spinBox_eye->disconnect(this);
+    // slider_eye->disconnect(this);
     spinBox_bw->setValue(0);
     spinBox_crop->setValue(50);
     spinBox1->setValue(50);
@@ -2178,7 +2179,7 @@ void main_window::initialization()
     spinBox_blur->setValue(0);
     spinBox_saturation->setValue(0);
     spinBox_sticker->setValue(15);
-    spinBox_eye->setValue(5);
+    // spinBox_eye->setValue(5);
     main_screen->set_m_text(false);
     main_screen->set_m_addsticker(false);
     main_screen->set_m_mosaic(false);

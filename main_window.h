@@ -92,7 +92,7 @@ private:
     Button *Filter_Button = new Button();
     Button *Sticker_Button = new Button();
     Button *Text_Button = new Button();
-    Button *Bigeye_Button = new Button();
+    // Button *Bigeye_Button = new Button();
     Button *Frame_Button = new Button();
     Button *Mosaic_Button = new Button();
     Button *Colorchange_Button = new Button();
@@ -145,8 +145,8 @@ private:
     QPixmap *Text_PressImg = new QPixmap(":/images/Text_press.png");
     QPixmap *Sticker_Img = new QPixmap(":/images/Sticker_button.png");
     QPixmap *Sticker_PressImg = new QPixmap(":/images/Sticker_press.png");
-    QPixmap *Bigeye_Img = new QPixmap(":/images/Bigeye_button.png");
-    QPixmap *Bigeye_PressImg = new QPixmap(":/images/Bigeye_press.png");
+    // QPixmap *Bigeye_Img = new QPixmap(":/images/Bigeye_button.png");
+    // QPixmap *Bigeye_PressImg = new QPixmap(":/images/Bigeye_press.png");
     QPixmap *Collage_Img = new QPixmap(":/images/Collage_button.png");
     QPixmap *Collage_PressImg = new QPixmap(":/images/Collage_press.png");
 
@@ -282,6 +282,8 @@ private:
     QPixmap *pink_Img = new QPixmap(":/images/pink.png");
     QPixmap *green_Img = new QPixmap(":/images/green.png");
     QPixmap *purple_Img = new QPixmap(":/images/purple.jpeg");
+
+    
     //rotate
     QPushButton *LeftRotate_Button = new QPushButton();
     QPushButton *RightRotate_Button = new QPushButton();
@@ -320,8 +322,8 @@ private:
     QPixmap *Sticker7_Img = new QPixmap(":/images/Sticker7.png");
 
     /*Big eye*/
-    QSpinBox *spinBox_eye = new QSpinBox();
-    QSlider *slider_eye = new QSlider(Qt::Horizontal);
+    // QSpinBox *spinBox_eye = new QSpinBox();
+    // QSlider *slider_eye = new QSlider(Qt::Horizontal);
 
     /*Mosaic */
     Button *small_mosaic = new Button();
@@ -432,11 +434,11 @@ private slots:
     void Show_background();
     void back_flag();
 
-    /*big eye*/
-    void Show_eyeSlider();
-    void Hide_eyeSlider();
-    void temp_BigEye();
-    void Big_eye();
+    // /*big eye*/
+    // void Show_eyeSlider();
+    // void Hide_eyeSlider();
+    // void temp_BigEye();
+    // void Big_eye();
 
     /*mosaic*/
     void Set_Mosaic();
