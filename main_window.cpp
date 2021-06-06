@@ -21,15 +21,16 @@
 using namespace cv;
 using namespace std;
 
+/*Constant Value*/
+int BLUR_OPT = 1;
 
 /*
  * Implementation notes: main_window constructor
  * ------------------------------------------------
  * The constructor creates an GUI interface with initialized settings.
  */
-main_window::main_window(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::main_window)
+main_window::main_window(QWidget *parent) : QWidget(parent),
+                                            ui(new Ui::main_window)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
@@ -44,7 +45,7 @@ main_window::main_window(QWidget *parent) :
     Set_background();
 
     QPalette pal = this->palette();
-    pal.setBrush(QPalette::Background,QBrush(QPixmap(":/images/background5.jpeg")));
+    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/images/background5.jpeg")));
     setPalette(pal);
 }
 
@@ -58,7 +59,8 @@ main_window::~main_window()
  * ------------------------------------------------
  * Set main functional buttons.
  */
-void main_window::setMainButtons(){
+void main_window::setMainButtons()
+{
     ui->horizontalLayout->addWidget(return_Button);
     ui->horizontalLayout->addWidget(changeSize_Button);
     ui->horizontalLayout->addWidget(close_Button);
@@ -69,10 +71,9 @@ void main_window::setMainButtons(){
     close_Button->setPressPicture(close_PressImg);
     changeSize_Button->setButtonPicture(large_Img);
     changeSize_Button->setPressPicture(large_PressImg);
-    return_Button->setIconSize(QSize(30,30));
-    close_Button->setIconSize(QSize(30,30));
-    changeSize_Button->setIconSize(QSize(30,30));
-
+    return_Button->setIconSize(QSize(30, 30));
+    close_Button->setIconSize(QSize(30, 30));
+    changeSize_Button->setIconSize(QSize(30, 30));
 
     ui->verticalLayout_4->addWidget(Tool_Button);
     ui->verticalLayout_4->addWidget(Filter_Button);
@@ -87,14 +88,13 @@ void main_window::setMainButtons(){
     ui->scrollArea->setFixedSize(QSize(120, 170));
     ui->widget_2->setFixedSize(QSize(120, 170));
     ui->load_button->setFixedSize(QSize(50, 50));
-    ui->top_layout->setContentsMargins(5,5,5,5);
+    ui->top_layout->setContentsMargins(5, 5, 5, 5);
 
     ui->horizontalLayout_5->addWidget(Undo_Button);
     ui->horizontalLayout_5->addWidget(Redo_Button);
     ui->horizontalLayout_5->addWidget(TempSave_Button);
     ui->horizontalLayout_5->addWidget(Delete_Button);
     ui->horizontalLayout_5->addWidget(Download_Button);
-
 
     Tool_Button->setButtonPicture(Tool_Img);
     Tool_Button->setPressPicture(Tool_PressImg);
@@ -128,11 +128,11 @@ void main_window::setMainButtons(){
     Delete_Button->setPressPicture(delete_PressImg);
     Download_Button->setButtonPicture(download_Img);
     Download_Button->setPressPicture(download_PressImg);
-    Undo_Button->setIconSize(QSize(40,40));
-    Redo_Button->setIconSize(QSize(40,40));
-    TempSave_Button->setIconSize(QSize(40,40));
-    Delete_Button->setIconSize(QSize(40,40));
-    Download_Button->setIconSize(QSize(40,40));
+    Undo_Button->setIconSize(QSize(40, 40));
+    Redo_Button->setIconSize(QSize(40, 40));
+    TempSave_Button->setIconSize(QSize(40, 40));
+    Delete_Button->setIconSize(QSize(40, 40));
+    Download_Button->setIconSize(QSize(40, 40));
 
     connect(changeSize_Button, SIGNAL(released()), this, SLOT(changeWindowSize()));
     connect(close_Button, SIGNAL(released()), this, SLOT(close()));
@@ -142,6 +142,7 @@ void main_window::setMainButtons(){
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Mosaic()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Frame()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
+    // connect(return_Button, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
@@ -208,6 +209,7 @@ void main_window::setMainButtons(){
     connect(ui->load_button, SIGNAL(clicked()), this, SLOT(add_image_button()));
 
     //rotate
+    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
@@ -217,17 +219,18 @@ void main_window::setMainButtons(){
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Show_Rotate_Button()));
 
     //crop
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Show_crop()));
-    connect(tool_button_CP, SIGNAL(released()), this, SLOT(Tool_crop()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Show_crop()));
+    // connect(tool_button_CP, SIGNAL(released()), this, SLOT(Tool_crop()));
 
     //black_white
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Tool_blackwhite()));
+    // connect(tool_button_BR, SIGNAL(released()), this, SLOT(Show_BW_Slider()));
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
@@ -239,6 +242,7 @@ void main_window::setMainButtons(){
     //Brightness
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Tool_brightness()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Show_Bright_Slider()));
+    // connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
@@ -251,25 +255,27 @@ void main_window::setMainButtons(){
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Show_Contrast_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
+    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_crop()));
 
     //color filter
-    connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
-    connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
-    connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
-    connect(tool_button_FT, SIGNAL(released()), this,SLOT(Hide_Bright_Slider()));
-    connect(tool_button_FT, SIGNAL(released()), this, SLOT(Show_FilterColor_Button()));
-    connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
-    connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_crop()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Show_FilterColor_Button()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
+    // connect(tool_button_FT, SIGNAL(released()), this, SLOT(Hide_crop()));
 
     //saturation
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Tool_saturation()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
-    connect(tool_button_ST, SIGNAL(released()), this,SLOT(Hide_Bright_Slider()));
+    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Show_Saturation_Slider()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
@@ -280,24 +286,35 @@ void main_window::setMainButtons(){
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Show_Blur_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
+    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_crop()));
 }
 
-
 /*
  * Implementation notes: setAddition()
  * ------------------------------------------------
  * Set components which are shown after functional buttons are pushed.
  */
-void main_window::setAddition(){
+void main_window::setAddition()
+{
+    //black & white
+    // ui->horizontalLayout->addWidget(spinBox_bw);
+    // ui->horizontalLayout->addWidget(slider_bw);
+    // spinBox_bw->setRange(0, 255);
+    // slider_bw->setRange(0, 255);
+    // connect(spinBox_bw, SIGNAL(valueChanged(int)), slider_bw, SLOT(setValue(int)));
+    // connect(slider_bw, SIGNAL(valueChanged(int)), spinBox_bw, SLOT(setValue(int)));
+    // spinBox_bw->setVisible(false);
+    // slider_bw->setVisible(false);
+    
     //brightness
     ui->horizontalLayout->addWidget(spinBox1);
     ui->horizontalLayout->addWidget(slider1);
-    spinBox1->setRange(0,100);
-    slider1->setRange(0,100);
+    spinBox1->setRange(0, 100);
+    slider1->setRange(0, 100);
     connect(spinBox1, SIGNAL(valueChanged(int)), slider1, SLOT(setValue(int)));
     connect(slider1, SIGNAL(valueChanged(int)), spinBox1, SLOT(setValue(int)));
     spinBox1->setVisible(false);
@@ -306,28 +323,48 @@ void main_window::setAddition(){
     //contrast
     ui->horizontalLayout->addWidget(spinBox2);
     ui->horizontalLayout->addWidget(slider2);
-    spinBox2->setRange(0,30);
-    slider2->setRange(0,30);
+    spinBox2->setRange(0, 30);
+    slider2->setRange(0, 30);
     connect(spinBox2, SIGNAL(valueChanged(int)), slider2, SLOT(setValue(int)));
     connect(slider2, SIGNAL(valueChanged(int)), spinBox2, SLOT(setValue(int)));
     spinBox2->setVisible(false);
     slider2->setVisible(false);
 
     //blur
+    ui->horizontalLayout->addWidget(gussian_blur_Button);
+    ui->horizontalLayout->addWidget(median_blur_Button);
+    ui->horizontalLayout->addWidget(mean_blur_Button);
     ui->horizontalLayout->addWidget(spinBox_blur);
     ui->horizontalLayout->addWidget(slider_blur);
-    spinBox_blur->setRange(0,30);
-    slider_blur->setRange(0,30);
-    connect(spinBox_blur, SIGNAL(valueChanged(int)), slider_blur, SLOT(setValue(int)));
-    connect(slider_blur, SIGNAL(valueChanged(int)), spinBox_blur, SLOT(setValue(int)));
+
+    gussian_blur_Button->setIconSize(QSize(80, 40));
+    median_blur_Button->setIconSize(QSize(80, 40));
+    mean_blur_Button->setIconSize(QSize(80, 40));
+    spinBox_blur->setRange(0, 30);
+    slider_blur->setRange(0, 30);
+
+    gussian_blur_Button->setText("Gussian Blur");
+    median_blur_Button->setText("Median Blur");
+    mean_blur_Button->setText("Mean Blur");
+
+    gussian_blur_Button->setVisible(false);
+    median_blur_Button->setVisible(false);
+    mean_blur_Button->setVisible(false);
     spinBox_blur->setVisible(false);
     slider_blur->setVisible(false);
+
+    connect(gussian_blur_Button, SIGNAL(released()), this, SLOT(Tool_blur()));
+    connect(median_blur_Button, SIGNAL(released()), this, SLOT(Tool_blur()));
+    connect(mean_blur_Button, SIGNAL(released()), this, SLOT(Tool_blur()));
+    connect(spinBox_blur, SIGNAL(valueChanged(int)), slider_blur, SLOT(setValue(int)));
+    connect(slider_blur, SIGNAL(valueChanged(int)), spinBox_blur, SLOT(setValue(int)));
+    
 
     //saturation
     ui->horizontalLayout->addWidget(spinBox_saturation);
     ui->horizontalLayout->addWidget(slider_saturation);
-    spinBox_saturation->setRange(-100,100);
-    slider_saturation->setRange(-100,100);
+    spinBox_saturation->setRange(-100, 100);
+    slider_saturation->setRange(-100, 100);
     connect(spinBox_saturation, SIGNAL(valueChanged(int)), slider_saturation, SLOT(setValue(int)));
     connect(slider_saturation, SIGNAL(valueChanged(int)), spinBox_saturation, SLOT(setValue(int)));
     spinBox_saturation->setVisible(false);
@@ -337,7 +374,7 @@ void main_window::setAddition(){
     ui->horizontalLayout->addWidget(crop_Button);
     crop_Button->setButtonPicture(confirm_Img);
     crop_Button->setPressPicture(confirm_PressImg);
-    crop_Button->setButtonSize(30,30);
+    crop_Button->setButtonSize(30, 30);
     crop_Button->setVisible(false);
 
     //rotate
@@ -347,11 +384,11 @@ void main_window::setAddition(){
     ui->horizontalLayout->addWidget(VerticalFlip_Button);
     ui->horizontalLayout->addWidget(DiagonalFlip_Button);
 
-    LeftRotate_Button->setIconSize(QSize(80,40));
-    RightRotate_Button->setIconSize(QSize(80,40));
-    HorizontalFlip_Button->setIconSize(QSize(80,40));
-    DiagonalFlip_Button->setIconSize(QSize(80,40));
-    VerticalFlip_Button->setIconSize(QSize(80,40));
+    LeftRotate_Button->setIconSize(QSize(80, 40));
+    RightRotate_Button->setIconSize(QSize(80, 40));
+    HorizontalFlip_Button->setIconSize(QSize(80, 40));
+    DiagonalFlip_Button->setIconSize(QSize(80, 40));
+    VerticalFlip_Button->setIconSize(QSize(80, 40));
 
     LeftRotate_Button->setText("Left Rotate");
     RightRotate_Button->setText("Right Rotate");
@@ -395,13 +432,13 @@ void main_window::setAddition(){
     cf_pink->setButtonPicture(pink_Img);
     cf_pink->setPressPicture(pink_Img);
 
-    cf_red->setButtonSize(40,40);
-    cf_orange->setButtonSize(40,40);
-    cf_yellow->setButtonSize(40,40);
-    cf_green->setButtonSize(40,40);
-    cf_blue->setButtonSize(40,40);
-    cf_purple->setButtonSize(40,40);
-    cf_pink->setButtonSize(40,40);
+    cf_red->setButtonSize(40, 40);
+    cf_orange->setButtonSize(40, 40);
+    cf_yellow->setButtonSize(40, 40);
+    cf_green->setButtonSize(40, 40);
+    cf_blue->setButtonSize(40, 40);
+    cf_purple->setButtonSize(40, 40);
+    cf_pink->setButtonSize(40, 40);
 
     cf_red->setVisible(false);
     cf_orange->setVisible(false);
@@ -422,8 +459,8 @@ void main_window::setAddition(){
     //Sticker
     ui->horizontalLayout->addWidget(spinBox_sticker);
     ui->horizontalLayout->addWidget(slider_sticker);
-    spinBox_sticker->setRange(0,100);
-    slider_sticker->setRange(0,100);
+    spinBox_sticker->setRange(0, 100);
+    slider_sticker->setRange(0, 100);
     connect(spinBox_sticker, SIGNAL(valueChanged(int)), slider_sticker, SLOT(setValue(int)));
     connect(slider_sticker, SIGNAL(valueChanged(int)), spinBox_sticker, SLOT(setValue(int)));
     spinBox_sticker->setVisible(false);
@@ -440,8 +477,8 @@ void main_window::setAddition(){
     //big eye
     ui->horizontalLayout->addWidget(spinBox_eye);
     ui->horizontalLayout->addWidget(slider_eye);
-    spinBox_eye->setRange(0,15);
-    slider_eye->setRange(0,15);
+    spinBox_eye->setRange(0, 15);
+    slider_eye->setRange(0, 15);
     connect(spinBox_eye, SIGNAL(valueChanged(int)), slider_eye, SLOT(setValue(int)));
     connect(slider_eye, SIGNAL(valueChanged(int)), spinBox_eye, SLOT(setValue(int)));
     spinBox_eye->setVisible(false);
@@ -449,12 +486,12 @@ void main_window::setAddition(){
 
     //text
     ui->horizontalLayout->addWidget(textEdt);
-    textEdt->setStyleSheet("color:black");//文本颜色
-    textEdt->setStyleSheet("background-color:white");//背景色
+    textEdt->setStyleSheet("color:black");            //文本颜色
+    textEdt->setStyleSheet("background-color:white"); //背景色
     textEdt->setVisible(false);
 
     ui->horizontalLayout->addWidget(spinBoxText);
-    spinBoxText->setRange(0,60);
+    spinBoxText->setRange(0, 60);
     spinBoxText->setVisible(false);
 
     //collage
@@ -464,8 +501,8 @@ void main_window::setAddition(){
     collage_v->setVisible(false);
     connect(collage_h, SIGNAL(released()), this, SLOT(Collage()));
     connect(collage_v, SIGNAL(released()), this, SLOT(Collage()));
-    collage_h->setButtonSize(120,30);
-    collage_v->setButtonSize(120,30);
+    collage_h->setButtonSize(120, 30);
+    collage_v->setButtonSize(120, 30);
     collage_h->setButtonPicture(collageH_Img);
     collage_h->setPressPicture(collageH_Img);
     collage_v->setButtonPicture(collageV_Img);
@@ -486,19 +523,23 @@ void main_window::setAddition(){
  */
 void main_window::changeWindowSize()
 {
-    if(notChange){
-        setWindowState(Qt::WindowMaximized );
+    if (notChange)
+    {
+        setWindowState(Qt::WindowMaximized);
         changeSize_Button->setButtonPicture(small_Img);
         changeSize_Button->setPressPicture(small_PressImg);
-    }else {
-        setWindowState(Qt::WindowNoState );
+    }
+    else
+    {
+        setWindowState(Qt::WindowNoState);
         changeSize_Button->setButtonPicture(large_Img);
         changeSize_Button->setPressPicture(large_PressImg);
     }
     notChange = !notChange;
 }
 
-void main_window::MainClose(){
+void main_window::MainClose()
+{
     close();
 }
 
@@ -508,47 +549,57 @@ void main_window::MainClose(){
  * Generate a random integer from 0 to 9, to set different dictums
  * on text editor.
  */
-void main_window::setDicText(){
+void main_window::setDicText()
+{
     srand(time(0));
     int seed = rand() % 11;
     ui->horizontalLayout_4->addWidget(dictum);
     QPalette p = dictum->palette();
-    p.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
+    p.setBrush(QPalette::Base, QBrush(QColor(255, 0, 0, 0)));
     dictum->setPalette(p);
     dictum->setTextColor(Qt::white);
-    if (seed==0){
-    dictum->setText("In order to be irreplaceable, one must always be different. -- Coco Chanel");
+    if (seed == 0)
+    {
+        dictum->setText("In order to be irreplaceable, one must always be different. -- Coco Chanel");
     }
-    else if (seed==1){
-    dictum->setText("Be the change that you wish to see in the world. -- Mahatma Gandhi");
+    else if (seed == 1)
+    {
+        dictum->setText("Be the change that you wish to see in the world. -- Mahatma Gandhi");
     }
-    else if (seed==2){
-    dictum->setText("Spread love everywhere you go. -- Mother Teresa");
+    else if (seed == 2)
+    {
+        dictum->setText("Spread love everywhere you go. -- Mother Teresa");
     }
-    else if (seed==3){
-    dictum->setText("If you look at what you have in life, you'll always have more. -- Oprah Winfrey");
+    else if (seed == 3)
+    {
+        dictum->setText("If you look at what you have in life, you'll always have more. -- Oprah Winfrey");
     }
-    else if (seed==4){
+    else if (seed == 4)
+    {
         dictum->setText("You are enough just as you are. -- Meghan Markle");
     }
-    else if (seed==5){
+    else if (seed == 5)
+    {
         dictum->setText("My mission in life is not merely to survive, but to thrive. -- Maya Angelou");
     }
-    else if (seed==6){
+    else if (seed == 6)
+    {
         dictum->setText("You must do the things you think you cannot do. -- Eleanor Roosevelt");
     }
-    else if (seed==7){
+    else if (seed == 7)
+    {
         dictum->setText("Happiness is not by chance, but by choice. -- Jim Rohn");
     }
-    else if (seed==8){
+    else if (seed == 8)
+    {
         dictum->setText("Some people look for a beautiful place. Others make a place beautiful. -- Hazrat Inayat Khan");
     }
-    else{
+    else
+    {
         dictum->setText("Don’t let yesterday take up too much of today. -- Will Rogers");
     }
 
-    dictum->setAlignment( Qt::AlignCenter );
-
+    dictum->setAlignment(Qt::AlignCenter);
 }
 
 /*
@@ -556,7 +607,8 @@ void main_window::setDicText(){
  * ------------------------------------------------
  * Hide functional buttons.
  */
-void main_window::ButtonHide(){
+void main_window::ButtonHide()
+{
     Tool_Button->setVisible(false);
     Filter_Button->setVisible(false);
     Sticker_Button->setVisible(false);
@@ -566,7 +618,6 @@ void main_window::ButtonHide(){
     Frame_Button->setVisible(false);
     Colorchange_Button->setVisible(false);
     Collage_Button->setVisible(false);
-
 }
 
 /*
@@ -574,7 +625,8 @@ void main_window::ButtonHide(){
  * ----------------------------------
  * Show functional buttons.
  */
-void main_window::ButtonShow(){
+void main_window::ButtonShow()
+{
     Tool_Button->setVisible(true);
     Filter_Button->setVisible(true);
     Sticker_Button->setVisible(true);
@@ -586,7 +638,6 @@ void main_window::ButtonShow(){
     Collage_Button->setVisible(true);
 }
 
-
 /*
  * when the load_button is clicked, it will ask the user to pick
  * an image and show it as a image button in the scroll area
@@ -597,11 +648,11 @@ void main_window::add_image_button()
     num++;
 
     QString filename(get_imagefile_name());
-    std::cout<<filename.toStdString()<<std::endl;
+    std::cout << filename.toStdString() << std::endl;
     listButtons.push_back(new QToolButton());
-    QImage* img = new QImage, * scaledimg = new QImage;
+    QImage *img = new QImage, *scaledimg = new QImage;
 
-    if(! ( img->load(filename) ) )
+    if (!(img->load(filename)))
     {
         QMessageBox::information(this,
                                  tr("error message"),
@@ -610,30 +661,33 @@ void main_window::add_image_button()
         return;
     }
 
-    int Owidth = img->width(),Oheight = img->height();
-    int Fwidth, Fheight;           //the new image size
+    int Owidth = img->width(), Oheight = img->height();
+    int Fwidth, Fheight; //the new image size
     int Mul;
 
-    if (Owidth >= Oheight) Mul = Owidth/55;
-    else Mul = Oheight/55;
+    if (Owidth >= Oheight)
+        Mul = Owidth / 55;
+    else
+        Mul = Oheight / 55;
 
-    Fwidth = Owidth/Mul;
-    Fheight = Oheight/Mul;
+    Fwidth = Owidth / Mul;
+    Fheight = Oheight / Mul;
 
-    *scaledimg = img->scaled(Fwidth,Fheight,Qt::KeepAspectRatio);
-    std::cout<<i<<std::endl;
+    *scaledimg = img->scaled(Fwidth, Fheight, Qt::KeepAspectRatio);
+    std::cout << i << std::endl;
     listButtons[i]->setFixedSize(QSize(55, 55));
     listButtons[i]->setIcon(QPixmap::fromImage(*img));
     listButtons[i]->setIconSize(QSize(Fwidth, Fheight));
-    ui->top_layout->addWidget(listButtons[i],Qt::AlignCenter);
+    ui->top_layout->addWidget(listButtons[i], Qt::AlignCenter);
     tempcollagename = filename;
 
-    connect(listButtons[i],SIGNAL(clicked()), buttonMapper, SLOT(map()));
+    connect(listButtons[i], SIGNAL(clicked()), buttonMapper, SLOT(map()));
     buttonMapper->setMapping(listButtons[i], filename);
     connect(buttonMapper, SIGNAL(mapped(QString)), this, SLOT(display_image(QString)));
 }
 
-void main_window::on_button_clicked(){
+void main_window::on_button_clicked()
+{
 }
 
 /*
@@ -646,11 +700,11 @@ QString main_window::get_imagefile_name()
     dialog.setNameFilter(tr("Images (*.png *.xpm *.jpg *.jpeg)"));
     dialog.setViewMode(QFileDialog::Detail);
     QString fileName = QFileDialog::getOpenFileName(this,
-       tr("Open Images"), "/home/rpi/Desktop/Picture/Sample Pictures", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    if( fileName.isEmpty())
-       {
-       return ":/white.png";
-       }
+                                                    tr("Open Images"), "/home/rpi/Desktop/Picture/Sample Pictures", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+    if (fileName.isEmpty())
+    {
+        return ":/white.png";
+    }
     else if (!fileName.isEmpty())
     {
         return fileName;
@@ -662,86 +716,92 @@ QString main_window::get_imagefile_name()
  */
 void main_window::display_image(QString filename)
 {
-    QImage* image = new QImage,* scaledimg = new QImage;
-    if(! ( image->load(filename) ) )
-            {
-                QMessageBox::information(this,
-                                         tr("error message"),
-                                         tr("fail to load the image!"));
-                delete image;
-                return;
-            }
+    QImage *image = new QImage, *scaledimg = new QImage;
+    if (!(image->load(filename)))
+    {
+        QMessageBox::information(this,
+                                 tr("error message"),
+                                 tr("fail to load the image!"));
+        delete image;
+        return;
+    }
 
-    float Owidth = image->width(),Oheight = image->height();
-    int Fwidth, Fheight;           //the new image size
+    float Owidth = image->width(), Oheight = image->height();
+    int Fwidth, Fheight; //the new image size
     float Mul;
 
-    if (Owidth >= Oheight) Mul = Owidth/500;
-    else Mul = Oheight/500;
+    if (Owidth >= Oheight)
+        Mul = Owidth / 500;
+    else
+        Mul = Oheight / 500;
 
-    Fwidth = floor(Owidth/Mul);
-    Fheight = floor(Oheight/Mul);
+    Fwidth = floor(Owidth / Mul);
+    Fheight = floor(Oheight / Mul);
 
-    *scaledimg = image->scaled(500,500,Qt::KeepAspectRatio);
+    *scaledimg = image->scaled(500, 500, Qt::KeepAspectRatio);
     *main_pic = *scaledimg;
     //disconnect
     initialization();
     display_screen();
-
 }
 
-void main_window::display_screen(){
+void main_window::display_screen()
+{
     GraphScreen *pic = new GraphScreen;
     main_screen = pic;
     pic->display(main_pic);
     ui->graphicsView->setScene(pic);
-    ui->graphicsView->fitInView(pic->itemsBoundingRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->fitInView(pic->itemsBoundingRect(), Qt::KeepAspectRatio);
     ui->graphicsView->show();
 }
 
-void main_window::display_graphscreen(){
+void main_window::display_graphscreen()
+{
     *main_pic = *(main_screen->ScreenPic);
     GraphScreen *pic = new GraphScreen;
     main_screen = pic;
     pic->display(main_pic);
     ui->graphicsView->setScene(pic);
-    ui->graphicsView->fitInView(pic->itemsBoundingRect(),Qt::KeepAspectRatio);
+    ui->graphicsView->fitInView(pic->itemsBoundingRect(), Qt::KeepAspectRatio);
     ui->graphicsView->show();
 }
 
 /* Undo, redo, do */
-bool main_window::CanUndo(){
+bool main_window::CanUndo()
+{
     return (undostack_count > 0);
 }
 
-void main_window::DeleteAction(){
+void main_window::DeleteAction()
+{
     delete main_pic;
     main_pic = new QImage;
     display_screen();
-
 }
 
-void main_window::DownloadAction(){
+void main_window::DownloadAction()
+{
 
     {
         QFileDialog fileDialog;
-        QString str = fileDialog.getSaveFileName(this,"Open File","","Image File(*.jpg)");
-        if(str == "")
+        QString str = fileDialog.getSaveFileName(this, "Open File", "", "Image File(*.jpg)");
+        if (str == "")
         {
             return;
         }
         QFile filename(str);
         string path = str.toStdString();
-        cout<<path;
-        main_pic->save(&filename,"JPG");
-        QMessageBox::information(this,"Ssve File","Save File Success",QMessageBox::Ok);
+        cout << path;
+        main_pic->save(&filename, "JPG");
+        QMessageBox::information(this, "Ssve File", "Save File Success", QMessageBox::Ok);
         filename.close();
     }
-
 }
 
-void main_window::UndoAction(){
-    if (!undo_stack.empty()){
+void main_window::UndoAction()
+{
+    if (!undo_stack.empty())
+    {
         redostack_count++;
         *main_pic = undo_stack.top();
         QImage image_copy = main_pic->copy();
@@ -752,20 +812,23 @@ void main_window::UndoAction(){
     }
 }
 
-void main_window::DoAction(){
+void main_window::DoAction()
+{
     QImage image_copy = main_pic->copy();
     undo_stack.push(image_copy);
 }
 
-void main_window::RedoAction(){
-    if (!redo_stack.empty()){
-    undostack_count++;
-    *main_pic = redo_stack.top();
-    QImage image_copy = main_pic->copy();
-    undo_stack.push(image_copy);
-    redo_stack.pop();
-    redostack_count--;
-    display_screen();
+void main_window::RedoAction()
+{
+    if (!redo_stack.empty())
+    {
+        undostack_count++;
+        *main_pic = redo_stack.top();
+        QImage image_copy = main_pic->copy();
+        undo_stack.push(image_copy);
+        redo_stack.pop();
+        redostack_count--;
+        display_screen();
     }
 }
 
@@ -775,52 +838,69 @@ void main_window::RedoAction(){
  * ------------------------------------------------
  * Set properties of components of tool function. Allow hide or shown these components
  */
-void main_window::Set_Tool(){
+void main_window::Set_Tool()
+{
     ui->scrollArea_Tool->setFixedSize(QSize(120, 300));
     ui->scrollAreaWidgetContents_Tool->setLayout(Vlayout_Tool);
 
-    Vlayout_Tool->addWidget(tool_button_CP,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_RT,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_BW,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_BR,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_CT,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_FT,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_ST,0,Qt::AlignCenter);
-    Vlayout_Tool->addWidget(tool_button_BL,0,Qt::AlignCenter);
-
-    tool_button_CP->setButtonSize(90,80);
-    tool_button_RT->setButtonSize(90,80);
-    tool_button_BW->setButtonSize(90,80);
-    tool_button_BR->setButtonSize(90,80);
-    tool_button_CT->setButtonSize(90,80);
-    tool_button_FT->setButtonSize(90,80);
-    tool_button_ST->setButtonSize(90,80);
-    tool_button_BL->setButtonSize(90,80);
-    tool_button_CP->setButtonPicture(Crop_Img);
-    tool_button_CP->setPressPicture(Crop_PressImg);
+    // Crop
+    // Vlayout_Tool->addWidget(tool_button_CP, 0, Qt::AlignCenter);
+    // tool_button_CP->setButtonSize(90, 80);
+    // tool_button_CP->setButtonPicture(Crop_Img);
+    // tool_button_CP->setPressPicture(Crop_PressImg);
+    
+    // Rotate
+    Vlayout_Tool->addWidget(tool_button_RT, 0, Qt::AlignCenter);
+    tool_button_RT->setButtonSize(90, 80);
     tool_button_RT->setButtonPicture(Rotation_Img);
     tool_button_RT->setPressPicture(Rotation_PressImg);
+
+    // Black & White
+    Vlayout_Tool->addWidget(tool_button_BW, 0, Qt::AlignCenter);
+    tool_button_BW->setButtonSize(90, 80);
     tool_button_BW->setButtonPicture(BlackWhite_Img);
     tool_button_BW->setPressPicture(BlackWhite_PressImg);
+
+    // Brightness
+    Vlayout_Tool->addWidget(tool_button_BR, 0, Qt::AlignCenter);
+    tool_button_BR->setButtonSize(90, 80);
     tool_button_BR->setButtonPicture(Brightness_Img);
     tool_button_BR->setPressPicture(Brightness_PressImg);
+
+    // Contrast
+    Vlayout_Tool->addWidget(tool_button_CT, 0, Qt::AlignCenter);
+    tool_button_CT->setButtonSize(90, 80);
     tool_button_CT->setButtonPicture(Contrast_Img);
     tool_button_CT->setPressPicture(Contrast_PressImg);
-    tool_button_FT->setButtonPicture(ColorFilter_Img);
-    tool_button_FT->setPressPicture(ColorFilter_PressImg);
+
+    // Color Filter
+    // Vlayout_Tool->addWidget(tool_button_FT, 0, Qt::AlignCenter);
+    // tool_button_FT->setButtonSize(90, 80);
+    // tool_button_FT->setButtonPicture(ColorFilter_Img);
+    // tool_button_FT->setPressPicture(ColorFilter_PressImg);
+
+    // Saturation
+    Vlayout_Tool->addWidget(tool_button_ST, 0, Qt::AlignCenter);
+    tool_button_ST->setButtonSize(90, 80);
     tool_button_ST->setButtonPicture(Saturation_Img);
     tool_button_ST->setPressPicture(Saturation_PressImg);
+
+    // Blur
+    Vlayout_Tool->addWidget(tool_button_BL, 0, Qt::AlignCenter);
+    tool_button_BL->setButtonSize(90, 80);
     tool_button_BL->setButtonPicture(Blur_Img);
     tool_button_BL->setPressPicture(Blur_PressImg);
 
     ui->scrollArea_Tool->setVisible(false);
 }
 
-void main_window:: Hide_Tool(){
+void main_window::Hide_Tool()
+{
     ui->scrollArea_Tool->setVisible(false);
 }
 
-void main_window:: Show_Tool(){
+void main_window::Show_Tool()
+{
     ui->scrollArea_Tool->setVisible(true);
 }
 
@@ -828,51 +908,80 @@ void main_window:: Show_Tool(){
  * Hide or show sliders and spin boxs for tool functions including
  *  brightness, contrast, blur, saturation, crop, color filter, rotation
  */
-void main_window:: Hide_Bright_Slider(){
+
+// void main_window::Hide_BW_Slider()
+// {
+//     spinBox_bw->setVisible(false);
+//     slider_bw->setVisible(false);
+// }
+// void main_window::Show_BW_Slider()
+// {
+//     spinBox_bw->setVisible(true);
+//     slider_bw->setVisible(true);
+// }
+
+void main_window::Hide_Bright_Slider()
+{
     spinBox1->setVisible(false);
     slider1->setVisible(false);
 }
-void main_window:: Show_Bright_Slider(){
+void main_window::Show_Bright_Slider()
+{
     spinBox1->setVisible(true);
     slider1->setVisible(true);
 }
 
-void main_window:: Hide_Contrast_Slider(){
+void main_window::Hide_Contrast_Slider()
+{
     spinBox2->setVisible(false);
     slider2->setVisible(false);
 }
-void main_window:: Show_Contrast_Slider(){
+void main_window::Show_Contrast_Slider()
+{
     spinBox2->setVisible(true);
     slider2->setVisible(true);
 }
 
-void main_window:: Hide_Blur_Slider(){
+void main_window::Hide_Blur_Slider()
+{
+    gussian_blur_Button->setVisible(false);
+    median_blur_Button->setVisible(false);
+    mean_blur_Button->setVisible(false);
     spinBox_blur->setVisible(false);
     slider_blur->setVisible(false);
 }
-void main_window:: Show_Blur_Slider(){
+void main_window::Show_Blur_Slider()
+{
+    gussian_blur_Button->setVisible(true);
+    median_blur_Button->setVisible(true);
+    mean_blur_Button->setVisible(true);
     spinBox_blur->setVisible(true);
     slider_blur->setVisible(true);
 }
 
-void main_window:: Hide_Saturation_Slider(){
+void main_window::Hide_Saturation_Slider()
+{
     spinBox_saturation->setVisible(false);
     slider_saturation->setVisible(false);
 }
 
-void main_window:: Show_Saturation_Slider(){
+void main_window::Show_Saturation_Slider()
+{
     spinBox_saturation->setVisible(true);
     slider_saturation->setVisible(true);
 }
 
-void main_window:: Hide_crop(){
+void main_window::Hide_crop()
+{
     crop_Button->setVisible(false);
 }
-void main_window:: Show_crop(){
+void main_window::Show_crop()
+{
     crop_Button->setVisible(true);
 }
 
-void main_window:: Hide_FilterColor_Button(){
+void main_window::Hide_FilterColor_Button()
+{
     cf_red->setVisible(false);
     cf_orange->setVisible(false);
     cf_yellow->setVisible(false);
@@ -880,10 +989,10 @@ void main_window:: Hide_FilterColor_Button(){
     cf_blue->setVisible(false);
     cf_purple->setVisible(false);
     cf_pink->setVisible(false);
-
 }
 
-void main_window:: Show_FilterColor_Button(){
+void main_window::Show_FilterColor_Button()
+{
     cf_red->setVisible(true);
     cf_orange->setVisible(true);
     cf_yellow->setVisible(true);
@@ -893,7 +1002,8 @@ void main_window:: Show_FilterColor_Button(){
     cf_pink->setVisible(true);
 }
 
-void main_window:: Hide_Rotate_Button(){
+void main_window::Hide_Rotate_Button()
+{
     LeftRotate_Button->setVisible(false);
     RightRotate_Button->setVisible(false);
     HorizontalFlip_Button->setVisible(false);
@@ -901,7 +1011,8 @@ void main_window:: Hide_Rotate_Button(){
     DiagonalFlip_Button->setVisible(false);
 }
 
-void main_window:: Show_Rotate_Button(){
+void main_window::Show_Rotate_Button()
+{
     LeftRotate_Button->setVisible(true);
     RightRotate_Button->setVisible(true);
     HorizontalFlip_Button->setVisible(true);
@@ -914,9 +1025,19 @@ void main_window:: Show_Rotate_Button(){
  * --------------------------------------
  * Tool function: black & white.
  */
-void main_window::Tool_blackwhite(){
+void main_window::Tool_blackwhite()
+{
+    // spinBox_bw->disconnect(this);
+    // slider_bw->disconnect(this);
+    // Temp_main_pic = QImage2cvMat(*main_pic).clone();
+    // spinBox_bw->setValue(0);
+    // connect(spinBox_bw, SIGNAL(valueChanged(int)), this, SLOT(temp_blackwhite()));
+
     Mat img = QImage2cvMat(*main_pic);
-    Mat bw_img = blackwhite(img);
+    Mat bw_img;
+    // std::cout<<img.dims<<" "<<img.channels()<<endl;
+    if(img.channels() == 3)
+        bw_img = blackwhite(img, 100);
     *main_pic = cvMat2QImage(bw_img);
     display_screen();
 }
@@ -926,7 +1047,8 @@ void main_window::Tool_blackwhite(){
  * --------------------------------
  * Tool function: crop.
  */
-void main_window:: Tool_crop(){
+void main_window::Tool_crop()
+{
     connect(crop_Button, SIGNAL(clicked()), this, SLOT(display_graphscreen()));
     main_screen->set_m_crop(true);
 }
@@ -938,10 +1060,21 @@ void main_window:: Tool_crop(){
  * will be called to invoking brightness function and
  * adjuest the brightness of the picture
  */
-void main_window::temp_brightness(){
+// void main_window::temp_blackwhite()
+// {
+//     int bw_value = spinBox_bw->value();
+//     Mat bw_img;
+//     if(img.channels() == 3)
+//         bw_img = blackwhite(Temp_main_pic, bw_value);
+//     *main_pic = cvMat2QImage(bw_img);
+//     display_screen();
+// }
+
+void main_window::temp_brightness()
+{
     int bright_value = spinBox1->value();
-    Mat br_img =brightness(Temp_main_pic, bright_value);
-    *main_pic=cvMat2QImage(br_img);
+    Mat br_img = brightness(Temp_main_pic, bright_value);
+    *main_pic = cvMat2QImage(br_img);
     display_screen();
 }
 
@@ -951,7 +1084,8 @@ void main_window::temp_brightness(){
  * save the current picture, initialize the spin box
  * value and connect signal and slot.
  */
-void main_window::Tool_brightness(){
+void main_window::Tool_brightness()
+{
     spinBox1->disconnect(this);
     slider1->disconnect(this);
     Temp_main_pic = QImage2cvMat(*main_pic).clone();
@@ -966,10 +1100,11 @@ void main_window::Tool_brightness(){
  * will be called to invoking contrast function and
  * adjuest the contrast degree of the picture.
  */
-void main_window::temp_contrast(){
-    int contrast_value = spinBox2->value()+10;
+void main_window::temp_contrast()
+{
+    int contrast_value = spinBox2->value() + 10;
     Mat contrast_img = contrast(Temp_main_pic, contrast_value);
-    *main_pic=cvMat2QImage(contrast_img);
+    *main_pic = cvMat2QImage(contrast_img);
     display_screen();
 }
 
@@ -979,7 +1114,8 @@ void main_window::temp_contrast(){
  * save the current picture, initialize the spin box
  * value and connect signal and slot.
  */
-void main_window::Tool_contrast(){
+void main_window::Tool_contrast()
+{
     spinBox2->disconnect(this);
     slider2->disconnect(this);
     Temp_main_pic = QImage2cvMat(*main_pic).clone();
@@ -994,10 +1130,26 @@ void main_window::Tool_contrast(){
  * will be called to invoking median_blur function and
  * adjuest the blur degree of the picture.
  */
-void main_window::temp_blur(){
+void main_window::temp_blur()
+{
     int blur_value = spinBox_blur->value();
-    Mat blur_img = median_blur(Temp_main_pic, blur_value);
-    *main_pic=cvMat2QImage(blur_img);
+    Mat blur_img;
+    // Mat blur_img = gussian_blur(Temp_main_pic, blur_value);
+    // cout<<"temp_blur:"<<BLUR_OPT<<endl;
+    switch (BLUR_OPT){
+        case 1:
+            blur_img = gussian_blur(Temp_main_pic, blur_value);
+            break;
+        case 2:
+            blur_img = median_blur(Temp_main_pic, blur_value);
+            break;
+        case 3:
+            blur_img = mean_blur(Temp_main_pic, blur_value);
+            break;
+    }
+
+
+    *main_pic = cvMat2QImage(blur_img);
     display_screen();
 }
 
@@ -1007,7 +1159,19 @@ void main_window::temp_blur(){
  * save the current picture, initialize the spin box
  * value and connect signal and slot.
  */
-void main_window::Tool_blur(){
+void main_window::Tool_blur()
+{
+
+    if (sender() == gussian_blur_Button){
+        BLUR_OPT = 1;
+    }
+    else if(sender() == median_blur_Button){
+        BLUR_OPT = 2;
+    }
+    else if(sender() == mean_blur_Button){
+        BLUR_OPT = 3;
+    }
+    cout<<BLUR_OPT<<endl;
     spinBox_blur->disconnect(this);
     slider_blur->disconnect(this);
     Temp_main_pic = QImage2cvMat(*main_pic).clone();
@@ -1022,10 +1186,11 @@ void main_window::Tool_blur(){
  * will be called to invoking saturation function and
  * adjuest the blur degree of the picture.
  */
-void main_window::temp_saturation(){
+void main_window::temp_saturation()
+{
     int saturation_value = spinBox_saturation->value();
     Mat saturation_img = saturation(Temp_main_pic, saturation_value);
-    *main_pic=cvMat2QImage(saturation_img);
+    *main_pic = cvMat2QImage(saturation_img);
     display_screen();
 }
 
@@ -1035,7 +1200,8 @@ void main_window::temp_saturation(){
  * save the current picture, initialize the spin box
  * value and connect signal and slot.
  */
-void main_window::Tool_saturation(){
+void main_window::Tool_saturation()
+{
     spinBox_saturation->disconnect(this);
     slider_saturation->disconnect(this);
     Temp_main_pic = QImage2cvMat(*main_pic).clone();
@@ -1049,27 +1215,33 @@ void main_window::Tool_saturation(){
  * According to the signal sender, set different mode of rotation.
  * Ivoking rotation function.
  */
-void main_window::Tool_rotate(){
-     Mat img = QImage2cvMat(*main_pic);
-     int mode=-1;
-     if (sender()==LeftRotate_Button){
-         mode=1;
-     }
-     else if (sender()==RightRotate_Button){
-         mode=2;
-     }
-     else if (sender()==HorizontalFlip_Button){
-         mode=3;
-     }
-     else if (sender()==VerticalFlip_Button){
-         mode=4;
-     }
-     else if (sender()==DiagonalFlip_Button){
-         mode=5;
-     }
-     Mat rotate_img = rotate(img, mode);
-     *main_pic = cvMat2QImage(rotate_img);
-     display_screen();
+void main_window::Tool_rotate()
+{
+    Mat img = QImage2cvMat(*main_pic);
+    int mode = -1;
+    if (sender() == LeftRotate_Button)
+    {
+        mode = 1;
+    }
+    else if (sender() == RightRotate_Button)
+    {
+        mode = 2;
+    }
+    else if (sender() == HorizontalFlip_Button)
+    {
+        mode = 3;
+    }
+    else if (sender() == VerticalFlip_Button)
+    {
+        mode = 4;
+    }
+    else if (sender() == DiagonalFlip_Button)
+    {
+        mode = 5;
+    }
+    Mat rotate_img = rotate(img, mode);
+    *main_pic = cvMat2QImage(rotate_img);
+    display_screen();
 }
 
 /*
@@ -1078,35 +1250,42 @@ void main_window::Tool_rotate(){
  * According to the signal sender, set different mode of color filter.
  * Ivoking color filter function.
  */
-void main_window::Tool_cf(){
+void main_window::Tool_cf()
+{
     Mat img = QImage2cvMat(*main_pic);
     int mode = 0;
-    if (sender()==cf_red){
-        mode=1;
+    if (sender() == cf_red)
+    {
+        mode = 1;
     }
-    else if (sender()==cf_orange){
-        mode=2;
+    else if (sender() == cf_orange)
+    {
+        mode = 2;
     }
-    else if (sender()==cf_yellow){
-        mode=3;
+    else if (sender() == cf_yellow)
+    {
+        mode = 3;
     }
-    else if (sender()==cf_green){
-        mode=4;
+    else if (sender() == cf_green)
+    {
+        mode = 4;
     }
-    else if (sender()==cf_blue){
-        mode=5;
+    else if (sender() == cf_blue)
+    {
+        mode = 5;
     }
-    else if (sender()==cf_purple){
-        mode=6;
+    else if (sender() == cf_purple)
+    {
+        mode = 6;
     }
-    else if (sender()==cf_pink){
-        mode=7;
+    else if (sender() == cf_pink)
+    {
+        mode = 7;
     }
     Mat cf_img = filter_color(img, mode);
     *main_pic = cvMat2QImage(cf_img);
     display_screen();
 }
-
 
 //Sticker function part
 /*
@@ -1114,42 +1293,43 @@ void main_window::Tool_cf(){
  * ------------------------------------------------
  * Set properties of components of sticker function. Allow hide or shown these components
  */
-void main_window::Set_Sticker(){
+void main_window::Set_Sticker()
+{
     ui->scrollArea_Sticker->setFixedSize(QSize(120, 300));
     ui->scrollAreaWidgetContents_Sticker->setLayout(Vlayout_Sticker);
 
     QPalette pa;
-    pa.setColor(QPalette::Text,Qt::white);
+    pa.setColor(QPalette::Text, Qt::white);
 
-    Vlayout_Sticker->addWidget(basic_sticker_label,Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(basic_sticker_label, Qt::AlignCenter);
     basic_sticker_label->setText("Basic");
     basic_sticker_label->setAlignment(Qt::AlignCenter);
     basic_sticker_label->setStyleSheet("background:transparent");
     basic_sticker_label->setFont(QFont("Timers", 18, QFont::Bold));
     basic_sticker_label->setPalette(pa);
 
-    Vlayout_Sticker->addWidget(sticker1,Qt::AlignCenter);
-    Vlayout_Sticker->addWidget(sticker2,Qt::AlignCenter);
-    Vlayout_Sticker->addWidget(sticker3,Qt::AlignCenter);
-    Vlayout_Sticker->addWidget(sticker4,Qt::AlignCenter);
-    Vlayout_Sticker->addWidget(sticker5,Qt::AlignCenter);
-    Vlayout_Sticker->addWidget(sticker6,Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker1, Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker2, Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker3, Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker4, Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker5, Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker6, Qt::AlignCenter);
 
-    Vlayout_Sticker->addWidget(advanced_sticker_label,Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(advanced_sticker_label, Qt::AlignCenter);
     advanced_sticker_label->setText("Advanced");
     advanced_sticker_label->setAlignment(Qt::AlignCenter);
     advanced_sticker_label->setStyleSheet("background:transparent");
     advanced_sticker_label->setFont(QFont("Timers", 18, QFont::Bold));
     advanced_sticker_label->setPalette(pa);
-    Vlayout_Sticker->addWidget(sticker7,Qt::AlignCenter);
+    Vlayout_Sticker->addWidget(sticker7, Qt::AlignCenter);
 
-    sticker1->setButtonSize(90,90);
-    sticker2->setButtonSize(90,90);
-    sticker3->setButtonSize(90,90);
-    sticker4->setButtonSize(90,90);
-    sticker5->setButtonSize(90,90);
-    sticker6->setButtonSize(90,90);
-    sticker7->setButtonSize(90,90);
+    sticker1->setButtonSize(90, 90);
+    sticker2->setButtonSize(90, 90);
+    sticker3->setButtonSize(90, 90);
+    sticker4->setButtonSize(90, 90);
+    sticker5->setButtonSize(90, 90);
+    sticker6->setButtonSize(90, 90);
+    sticker7->setButtonSize(90, 90);
 
     sticker1->setButtonPicture(Sticker1_Img);
     sticker1->setPressPicture(Sticker1_Img);
@@ -1169,15 +1349,17 @@ void main_window::Set_Sticker(){
     ui->scrollArea_Sticker->setVisible(false);
 }
 
-void main_window:: Hide_Sticker(){
+void main_window::Hide_Sticker()
+{
     ui->scrollArea_Sticker->setVisible(false);
     spinBox_sticker->setVisible(false);
     slider_sticker->setVisible(false);
 }
 
-void main_window:: Show_Sticker(){
+void main_window::Show_Sticker()
+{
     ui->scrollArea_Sticker->setVisible(true);
-    spinBox_sticker->setValue(15);    //贴纸大小初始值
+    spinBox_sticker->setValue(15); //贴纸大小初始值
     spinBox_sticker->setVisible(true);
     slider_sticker->setVisible(true);
 }
@@ -1189,33 +1371,41 @@ void main_window:: Show_Sticker(){
  * Set set_m_addsticker flag.
  *  Connect signal and slot to allow adjustment of sticker size.
  */
-void main_window::Sticker_Add(){
+void main_window::Sticker_Add()
+{
 
-    if (sender()==sticker1){
+    if (sender() == sticker1)
+    {
         main_screen->select_sticker(1);
         main_screen->set_m_addsticker(true);
     }
-    else if (sender()==sticker2){
+    else if (sender() == sticker2)
+    {
         main_screen->select_sticker(2);
         main_screen->set_m_addsticker(true);
     }
-    else if (sender()==sticker3){
+    else if (sender() == sticker3)
+    {
         main_screen->select_sticker(3);
         main_screen->set_m_addsticker(true);
     }
-    else if (sender()==sticker4){
+    else if (sender() == sticker4)
+    {
         main_screen->select_sticker(4);
         main_screen->set_m_addsticker(true);
     }
-    else if (sender()==sticker5){
+    else if (sender() == sticker5)
+    {
         main_screen->select_sticker(5);
         main_screen->set_m_addsticker(true);
     }
-    else if (sender()==sticker6){
+    else if (sender() == sticker6)
+    {
         main_screen->select_sticker(6);
         main_screen->set_m_addsticker(true);
     }
-    else if (sender()==sticker7){
+    else if (sender() == sticker7)
+    {
         main_screen->select_sticker(7);
         main_screen->set_m_addsticker(true);
     }
@@ -1231,11 +1421,11 @@ void main_window::Sticker_Add(){
  * ------------------------------------------------
  * Set sticker size.
  */
-void main_window::temp_StickerAdd(){
+void main_window::temp_StickerAdd()
+{
     int stickerSize_value = spinBox_sticker->value();
-        main_screen->set_sticker_size(stickerSize_value);
+    main_screen->set_sticker_size(stickerSize_value);
 }
-
 
 //Big eye function part
 /*
@@ -1243,12 +1433,14 @@ void main_window::temp_StickerAdd(){
  * ------------------------------------------------
  * Allow hide or show of components for Big eye function.
  */
-void main_window:: Show_eyeSlider(){
+void main_window::Show_eyeSlider()
+{
     spinBox_eye->setVisible(true);
     spinBox_eye->setValue(0);
     slider_eye->setVisible(true);
 }
-void main_window:: Hide_eyeSlider(){
+void main_window::Hide_eyeSlider()
+{
     spinBox_eye->setVisible(false);
     slider_eye->setVisible(false);
     spinBox_eye->disconnect(this);
@@ -1260,14 +1452,14 @@ void main_window:: Hide_eyeSlider(){
  * ------------------------------------------------
  * get sticker size and invoking eyesBigger function.
  */
-void main_window::temp_BigEye(){
-    float eyeSize_value = float(spinBox_eye->value())/100+1;
+void main_window::temp_BigEye()
+{
+    float eyeSize_value = float(spinBox_eye->value()) / 100 + 1;
     Mat bigEye_img;
     bigEye_img = eyesBigger(Temp_main_pic, eyeSize_value);
     *main_pic = cvMat2QImage(bigEye_img);
     display_screen();
 }
-
 
 /*
  * Implementation notes:Big_eye()
@@ -1275,14 +1467,13 @@ void main_window::temp_BigEye(){
  * save the current picture
  * connect signal and slot.
  */
-void main_window::Big_eye(){
+void main_window::Big_eye()
+{
     spinBox_eye->disconnect(this);
     slider_eye->disconnect(this);
     Temp_main_pic = QImage2cvMat(*main_pic).clone();
     connect(spinBox_eye, SIGNAL(valueChanged(int)), this, SLOT(temp_BigEye()));
 }
-
-
 
 //Mosaic function part
 /*
@@ -1291,15 +1482,16 @@ void main_window::Big_eye(){
  * Set properties of components of Mosaic function. Allow hide or show
  * of components for mosaic function.
  */
-void main_window:: Set_Mosaic(){
+void main_window::Set_Mosaic()
+{
     ui->scrollArea_Mosaic->setFixedSize(QSize(120, 300));
     ui->scrollAreaWidgetContents_Mosaic->setLayout(Vlayout_Mosaic);
     Vlayout_Mosaic->addWidget(small_mosaic);
     Vlayout_Mosaic->addWidget(median_mosaic);
     Vlayout_Mosaic->addWidget(large_mosaic);
-    small_mosaic->setButtonSize(90,80);
-    median_mosaic->setButtonSize(90,80);
-    large_mosaic->setButtonSize(90,80);
+    small_mosaic->setButtonSize(90, 80);
+    median_mosaic->setButtonSize(90, 80);
+    large_mosaic->setButtonSize(90, 80);
     small_mosaic->setButtonPicture(smallMosaic_Img);
     small_mosaic->setPressPicture(smallMosaic_Img);
     median_mosaic->setButtonPicture(medianMosaic_Img);
@@ -1308,16 +1500,18 @@ void main_window:: Set_Mosaic(){
     large_mosaic->setPressPicture(largeMosaic_Img);
     ui->scrollArea_Mosaic->setVisible(false);
 
-    connect(small_mosaic, SIGNAL(released()), this, SLOT(Mosaic()));//mia
-    connect(median_mosaic, SIGNAL(released()), this, SLOT(Mosaic()));//mia
-    connect(large_mosaic, SIGNAL(released()), this, SLOT(Mosaic()));//mia
+    connect(small_mosaic, SIGNAL(released()), this, SLOT(Mosaic()));  //mia
+    connect(median_mosaic, SIGNAL(released()), this, SLOT(Mosaic())); //mia
+    connect(large_mosaic, SIGNAL(released()), this, SLOT(Mosaic()));  //mia
 }
 
-void main_window:: Hide_Mosaic(){
+void main_window::Hide_Mosaic()
+{
     ui->scrollArea_Mosaic->setVisible(false);
 }
 
-void main_window:: Show_Mosaic(){
+void main_window::Show_Mosaic()
+{
     ui->scrollArea_Mosaic->setVisible(true);
 }
 
@@ -1328,23 +1522,25 @@ void main_window:: Show_Mosaic(){
  * size of mosaic.
  * Set set_mosaic_size flag
  */
-void main_window::Mosaic(){
+void main_window::Mosaic()
+{
     int size;
     main_screen->set_m_mosaic(true);
-    if (sender()==small_mosaic){
+    if (sender() == small_mosaic)
+    {
         size = 3;
     }
-    else if (sender()==median_mosaic){
+    else if (sender() == median_mosaic)
+    {
         size = 10;
     }
-    else{
+    else
+    {
         size = 20;
     }
 
     main_screen->set_mosaic_size(size);
-
 }
-
 
 //Frame function part
 /*
@@ -1353,7 +1549,8 @@ void main_window::Mosaic(){
  * Set properties of components of Frame function. Allow hide or show
  * of components for Frame function.
  */
-void main_window:: Set_Frame(){
+void main_window::Set_Frame()
+{
     ui->scrollArea_Frame->setFixedSize(QSize(120, 300));
     ui->scrollAreaWidgetContents_Frame->setLayout(Vlayout_Frame);
     Vlayout_Frame->addWidget(frame1);
@@ -1364,14 +1561,14 @@ void main_window:: Set_Frame(){
     Vlayout_Frame->addWidget(frame6);
     Vlayout_Frame->addWidget(frame7);
     Vlayout_Frame->addWidget(frame8);
-    frame1->setButtonSize(90,80);
-    frame2->setButtonSize(90,80);
-    frame3->setButtonSize(90,80);
-    frame4->setButtonSize(90,80);
-    frame5->setButtonSize(90,80);
-    frame6->setButtonSize(90,80);
-    frame7->setButtonSize(90,80);
-    frame8->setButtonSize(90,80);
+    frame1->setButtonSize(90, 80);
+    frame2->setButtonSize(90, 80);
+    frame3->setButtonSize(90, 80);
+    frame4->setButtonSize(90, 80);
+    frame5->setButtonSize(90, 80);
+    frame6->setButtonSize(90, 80);
+    frame7->setButtonSize(90, 80);
+    frame8->setButtonSize(90, 80);
     frame1->setButtonPicture(fr_Black_Img);
     frame1->setPressPicture(fr_Black_Img);
     frame2->setButtonPicture(fr_White_Img);
@@ -1399,11 +1596,13 @@ void main_window:: Set_Frame(){
     connect(frame8, SIGNAL(released()), this, SLOT(Frame()));
 }
 
-void main_window:: Hide_Frame(){
+void main_window::Hide_Frame()
+{
     ui->scrollArea_Frame->setVisible(false);
 }
 
-void main_window:: Show_Frame(){
+void main_window::Show_Frame()
+{
     ui->scrollArea_Frame->setVisible(true);
 }
 
@@ -1414,38 +1613,46 @@ void main_window:: Show_Frame(){
  * frame.
  * Ivoking add frame functions.
  */
-void main_window::Frame(){
+void main_window::Frame()
+{
     Mat img = QImage2cvMat(*main_pic).clone();
     Mat FrameImg;
-    if (sender()==frame1){
-        FrameImg = addframe_cv(img,3);
+    if (sender() == frame1)
+    {
+        FrameImg = addframe_cv(img, 3);
     }
-    else if (sender()==frame2){
-        FrameImg =addframe_cv(img,4);
+    else if (sender() == frame2)
+    {
+        FrameImg = addframe_cv(img, 4);
     }
-    else if (sender()==frame3){
-        FrameImg = addframe(img,3);
+    else if (sender() == frame3)
+    {
+        FrameImg = addframe(img, 3);
     }
-    else if (sender()==frame4){
-        FrameImg =addframe(img,1);
+    else if (sender() == frame4)
+    {
+        FrameImg = addframe(img, 1);
     }
-    else if (sender()==frame5){
-        FrameImg =addframe(img,4);
+    else if (sender() == frame5)
+    {
+        FrameImg = addframe(img, 4);
     }
-    else if (sender()==frame6){
-        FrameImg =addframe(img,2);
+    else if (sender() == frame6)
+    {
+        FrameImg = addframe(img, 2);
     }
-    else if (sender()==frame7){
-       FrameImg = addframe_cv(img,1);
+    else if (sender() == frame7)
+    {
+        FrameImg = addframe_cv(img, 1);
     }
-    else if (sender()==frame8){
-        FrameImg = addframe_cv(img,2);
+    else if (sender() == frame8)
+    {
+        FrameImg = addframe_cv(img, 2);
     }
 
     *main_pic = cvMat2QImage(FrameImg);
     display_screen();
 }
-
 
 //Frame function part
 /*
@@ -1454,34 +1661,35 @@ void main_window::Frame(){
  * Set properties of components of Filter function. Allow hide or show
  * of components for Filter function.
  */
-void main_window:: Set_Filter(){
+void main_window::Set_Filter()
+{
     ui->scrollArea_Filter->setFixedSize(QSize(120, 300));
     ui->scrollAreaWidgetContents_Filter->setLayout(Vlayout_Filter);
 
     QPalette pa;
-    pa.setColor(QPalette::Text,Qt::white);
+    pa.setColor(QPalette::Text, Qt::white);
 
-    Vlayout_Filter->addWidget(basic_filter_label,Qt::AlignCenter);
+    Vlayout_Filter->addWidget(basic_filter_label, Qt::AlignCenter);
     basic_filter_label->setText("Basic");
     basic_filter_label->setAlignment(Qt::AlignCenter);
     basic_filter_label->setStyleSheet("background:transparent");
     basic_filter_label->setFont(QFont("Timers", 18, QFont::Bold));
     basic_filter_label->setPalette(pa);
-    Vlayout_Filter->addWidget(filter_button_old,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_comic,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_pepper,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_grain,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_exposure,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_magic,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_silence,Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_old, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_comic, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_pepper, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_grain, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_exposure, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_magic, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_silence, Qt::AlignCenter);
 
-    filter_button_old->setButtonSize(90,80);
-    filter_button_comic->setButtonSize(90,80);
-    filter_button_pepper->setButtonSize(90,80);
-    filter_button_grain->setButtonSize(90,80);
-    filter_button_exposure->setButtonSize(90,80);
-    filter_button_magic->setButtonSize(90,80);
-    filter_button_silence->setButtonSize(90,80);
+    filter_button_old->setButtonSize(90, 80);
+    filter_button_comic->setButtonSize(90, 80);
+    filter_button_pepper->setButtonSize(90, 80);
+    filter_button_grain->setButtonSize(90, 80);
+    filter_button_exposure->setButtonSize(90, 80);
+    filter_button_magic->setButtonSize(90, 80);
+    filter_button_silence->setButtonSize(90, 80);
 
     filter_button_old->setButtonPicture(fOld_Img);
     filter_button_old->setPressPicture(fOld_Img);
@@ -1504,40 +1712,40 @@ void main_window:: Set_Filter(){
     filter_button_silence->setButtonPicture(fSilence_Img);
     filter_button_silence->setPressPicture(fSilence_Img);
 
-    Vlayout_Filter->addWidget(advanced_filter_label,Qt::AlignCenter);
+    Vlayout_Filter->addWidget(advanced_filter_label, Qt::AlignCenter);
     advanced_filter_label->setText("Advanced");
     advanced_filter_label->setAlignment(Qt::AlignCenter);
     advanced_filter_label->setStyleSheet("background:transparent");
     advanced_filter_label->setFont(QFont("Timers", 18, QFont::Bold));
     advanced_filter_label->setPalette(pa);
 
-    Vlayout_Filter->addWidget(filter_button_beauty,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_highlight,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_softlight,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_diffuse,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_expand,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_shrink,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_strike,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_volution,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_wave,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_sketch,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_neon,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_carve,Qt::AlignCenter);
-    Vlayout_Filter->addWidget(filter_button_embossment,Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_beauty, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_highlight, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_softlight, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_diffuse, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_expand, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_shrink, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_strike, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_volution, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_wave, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_sketch, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_neon, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_carve, Qt::AlignCenter);
+    Vlayout_Filter->addWidget(filter_button_embossment, Qt::AlignCenter);
 
-    filter_button_beauty->setButtonSize(90,80);
-    filter_button_highlight->setButtonSize(90,80);
-    filter_button_softlight->setButtonSize(90,80);
-    filter_button_diffuse->setButtonSize(90,80);
-    filter_button_expand->setButtonSize(90,80);
-    filter_button_shrink->setButtonSize(90,80);
-    filter_button_strike->setButtonSize(90,80);
-    filter_button_volution->setButtonSize(90,80);
-    filter_button_wave->setButtonSize(90,80);
-    filter_button_sketch->setButtonSize(90,80);
-    filter_button_neon->setButtonSize(90,80);
-    filter_button_carve->setButtonSize(90,80);
-    filter_button_embossment->setButtonSize(90,80);
+    filter_button_beauty->setButtonSize(90, 80);
+    filter_button_highlight->setButtonSize(90, 80);
+    filter_button_softlight->setButtonSize(90, 80);
+    filter_button_diffuse->setButtonSize(90, 80);
+    filter_button_expand->setButtonSize(90, 80);
+    filter_button_shrink->setButtonSize(90, 80);
+    filter_button_strike->setButtonSize(90, 80);
+    filter_button_volution->setButtonSize(90, 80);
+    filter_button_wave->setButtonSize(90, 80);
+    filter_button_sketch->setButtonSize(90, 80);
+    filter_button_neon->setButtonSize(90, 80);
+    filter_button_carve->setButtonSize(90, 80);
+    filter_button_embossment->setButtonSize(90, 80);
 
     filter_button_beauty->setButtonPicture(fBeauty_Img);
     filter_button_beauty->setPressPicture(fBeauty_Img);
@@ -1599,14 +1807,15 @@ void main_window:: Set_Filter(){
     connect(filter_button_embossment, SIGNAL(released()), this, SLOT(Filter()));
     connect(filter_button_pepper, SIGNAL(released()), this, SLOT(Filter()));
     connect(filter_button_grain, SIGNAL(released()), this, SLOT(Filter()));
-
 }
 
-void main_window:: Hide_Filter(){
+void main_window::Hide_Filter()
+{
     ui->scrollArea_Filter->setVisible(false);
 }
 
-void main_window:: Show_Filter(){
+void main_window::Show_Filter()
+{
     ui->scrollArea_Filter->setVisible(true);
 }
 
@@ -1617,73 +1826,93 @@ void main_window:: Show_Filter(){
  * filter.
  * Ivoking add filter functions.
  */
-void main_window:: Filter(){
-     Mat img = QImage2cvMat(*main_pic).clone();
-     Mat FilterImg;
-    if (sender()==filter_button_old){
+void main_window::Filter()
+{
+    Mat img = QImage2cvMat(*main_pic).clone();
+    Mat FilterImg;
+    if (sender() == filter_button_old)
+    {
         FilterImg = old(img);
     }
-    else if (sender()==filter_button_magic){
+    else if (sender() == filter_button_magic)
+    {
         FilterImg = magic(img);
     }
-    else if (sender()==filter_button_pepper){
-        FilterImg = noise(img,0);
+    else if (sender() == filter_button_pepper)
+    {
+        FilterImg = noise(img, 0);
     }
-    else if (sender()==filter_button_grain){
-        FilterImg = noise(img,1);
+    else if (sender() == filter_button_grain)
+    {
+        FilterImg = noise(img, 1);
     }
-    else if (sender()==filter_button_exposure){
+    else if (sender() == filter_button_exposure)
+    {
         FilterImg = exposure(img);
     }
-    else if (sender()==filter_button_comic){
+    else if (sender() == filter_button_comic)
+    {
         FilterImg = comic(img);
     }
-    else if (sender()==filter_button_silence){
+    else if (sender() == filter_button_silence)
+    {
         FilterImg = silence(img);
     }
-    else if (sender()==filter_button_beauty){
+    else if (sender() == filter_button_beauty)
+    {
         FilterImg = beauty(img);
     }
-    else if (sender()==filter_button_highlight){
+    else if (sender() == filter_button_highlight)
+    {
         FilterImg = highLight(img);
     }
-    else if (sender()==filter_button_softlight){
+    else if (sender() == filter_button_softlight)
+    {
         FilterImg = softLight(img);
     }
-    else if (sender()==filter_button_diffuse){
+    else if (sender() == filter_button_diffuse)
+    {
         FilterImg = diffuse(img);
     }
-    else if (sender()==filter_button_expand){
+    else if (sender() == filter_button_expand)
+    {
         FilterImg = expand(img);
     }
-    else if (sender()==filter_button_shrink){
+    else if (sender() == filter_button_shrink)
+    {
         FilterImg = shrink(img);
     }
-    else if (sender()==filter_button_strike){
+    else if (sender() == filter_button_strike)
+    {
         FilterImg = strike(img);
     }
-    else if (sender()==filter_button_volution){
+    else if (sender() == filter_button_volution)
+    {
         FilterImg = volution(img);
     }
-    else if (sender()==filter_button_wave){
+    else if (sender() == filter_button_wave)
+    {
         FilterImg = wave(img);
     }
-    else if (sender()==filter_button_carve){
+    else if (sender() == filter_button_carve)
+    {
         FilterImg = carve(img);
     }
-    else if (sender()==filter_button_sketch){
+    else if (sender() == filter_button_sketch)
+    {
         FilterImg = sketch(img);
     }
-    else if (sender()==filter_button_neon){
+    else if (sender() == filter_button_neon)
+    {
         FilterImg = neon(img);
     }
-    else if (sender()==filter_button_embossment){
+    else if (sender() == filter_button_embossment)
+    {
         FilterImg = embossment(img);
     }
 
     *main_pic = cvMat2QImage(FilterImg);
     display_screen();
-
 }
 
 //Background color change function part
@@ -1693,7 +1922,8 @@ void main_window:: Filter(){
  * Set properties of components of Background color change function. Allow hide or show
  * of components for Background color change function.
  */
-void main_window:: Set_background(){
+void main_window::Set_background()
+{
     //background
     ui->scrollArea_Background->setFixedSize(QSize(120, 300));
     ui->scrollAreaWidgetContents_Background->setLayout(Vlayout_Background);
@@ -1701,9 +1931,9 @@ void main_window:: Set_background(){
     Vlayout_Background->addWidget(red_back);
     Vlayout_Background->addWidget(blue_back);
     Vlayout_Background->addWidget(white_back);
-    red_back->setButtonSize(90,80);
-    blue_back->setButtonSize(90,80);
-    white_back->setButtonSize(90,80);
+    red_back->setButtonSize(90, 80);
+    blue_back->setButtonSize(90, 80);
+    white_back->setButtonSize(90, 80);
     red_back->setButtonPicture(red_Img);
     red_back->setPressPicture(red_Img);
     blue_back->setButtonPicture(blue_Img);
@@ -1717,17 +1947,16 @@ void main_window:: Set_background(){
     connect(blue_back, SIGNAL(released()), this, SLOT(back_flag()));
 }
 
-
-void main_window:: Hide_background(){
+void main_window::Hide_background()
+{
 
     ui->scrollArea_Background->setVisible(false);
-
 }
 
-void main_window:: Show_background(){
+void main_window::Show_background()
+{
 
     ui->scrollArea_Background->setVisible(true);
-
 }
 
 /*
@@ -1737,24 +1966,27 @@ void main_window:: Show_background(){
  * background color.
  * Ivoking changeBackground functions.
  */
-void main_window::back_flag(){
+void main_window::back_flag()
+{
     Mat img = QImage2cvMat(*main_pic);
     int mode = 0;
-    if (sender()==red_back){
-        mode=1;
+    if (sender() == red_back)
+    {
+        mode = 1;
     }
-    else if (sender()==white_back){
-        mode=0;
+    else if (sender() == white_back)
+    {
+        mode = 0;
     }
-    else if (sender()==blue_back){
-        mode=2;
+    else if (sender() == blue_back)
+    {
+        mode = 2;
     }
     Mat back_img = changeBackground(img, mode);
     *main_pic = cvMat2QImage(back_img);
 
     display_screen();
 }
-
 
 //Collage function part
 /*
@@ -1763,11 +1995,13 @@ void main_window::back_flag(){
  * Set properties of components of collage function. Allow hide or show
  * of components for collage function.
  */
-void main_window:: Show_collageButton(){
+void main_window::Show_collageButton()
+{
     collage_h->setVisible(true);
     collage_v->setVisible(true);
 }
-void main_window:: Hide_collageButton(){
+void main_window::Hide_collageButton()
+{
     collage_h->setVisible(false);
     collage_v->setVisible(false);
 }
@@ -1779,65 +2013,76 @@ void main_window:: Hide_collageButton(){
  * collage mode.
  * Ivoking functions that can combine pictures.
  */
-void main_window::Collage(){
+void main_window::Collage()
+{
     Mat img = QImage2cvMat(*main_pic).clone();
     Mat CollageImg = img;
-   if (sender()==collage_h){
-       if(num > 0){
-           laod_collage();
-           CollageImg = combine_hor(img, QImage2cvMat(tempcollage));
-       }
-       else{
-           add_image_button();
-           main_pic->load(tempcollagename);
-           float Owidth = main_pic->width(),Oheight = main_pic->height();
-           int Fwidth, Fheight;           //the new image size
-           float Mul;
+    if (sender() == collage_h)
+    {
+        if (num > 0)
+        {
+            laod_collage();
+            CollageImg = combine_hor(img, QImage2cvMat(tempcollage));
+        }
+        else
+        {
+            add_image_button();
+            main_pic->load(tempcollagename);
+            float Owidth = main_pic->width(), Oheight = main_pic->height();
+            int Fwidth, Fheight; //the new image size
+            float Mul;
 
-           if (Owidth >= Oheight) Mul = Owidth/500;
-           else Mul = Oheight/500;
+            if (Owidth >= Oheight)
+                Mul = Owidth / 500;
+            else
+                Mul = Oheight / 500;
 
-           Fwidth = floor(Owidth/Mul);
-           Fheight = floor(Oheight/Mul);
+            Fwidth = floor(Owidth / Mul);
+            Fheight = floor(Oheight / Mul);
 
-           *main_pic = main_pic->scaled(500,500,Qt::KeepAspectRatio);
+            *main_pic = main_pic->scaled(500, 500, Qt::KeepAspectRatio);
             display_screen();
-       }
+        }
+    }
+    else if (sender() == collage_v)
+    {
+        if (num > 0)
+        {
+            laod_collage();
+            CollageImg = combine_ver(img, QImage2cvMat(tempcollage));
+        }
+        else
+        {
+            add_image_button();
+            main_pic->load(tempcollagename);
+            float Owidth = main_pic->width(), Oheight = main_pic->height();
+            int Fwidth, Fheight; //the new image size
+            float Mul;
 
-   }
-   else if (sender()==collage_v){
-       if(num > 0){
-           laod_collage();
-           CollageImg = combine_ver(img, QImage2cvMat(tempcollage));
-       }
-       else{
-           add_image_button();
-           main_pic->load(tempcollagename);
-           float Owidth = main_pic->width(),Oheight = main_pic->height();
-           int Fwidth, Fheight;           //the new image size
-           float Mul;
+            if (Owidth >= Oheight)
+                Mul = Owidth / 500;
+            else
+                Mul = Oheight / 500;
 
-           if (Owidth >= Oheight) Mul = Owidth/500;
-           else Mul = Oheight/500;
+            Fwidth = floor(Owidth / Mul);
+            Fheight = floor(Oheight / Mul);
 
-           Fwidth = floor(Owidth/Mul);
-           Fheight = floor(Oheight/Mul);
-
-           *main_pic = main_pic->scaled(500,500,Qt::KeepAspectRatio);
+            *main_pic = main_pic->scaled(500, 500, Qt::KeepAspectRatio);
             display_screen();
-       }
-   }
+        }
+    }
 
-   *main_pic = cvMat2QImage(CollageImg);
+    *main_pic = cvMat2QImage(CollageImg);
     display_screen();
 }
 
-void main_window::laod_collage(){
+void main_window::laod_collage()
+{
     QString filename(get_imagefile_name());
-    std::cout<<filename.toStdString()<<std::endl;
-    QImage* img = new QImage, * scaledimg = new QImage;
+    std::cout << filename.toStdString() << std::endl;
+    QImage *img = new QImage, *scaledimg = new QImage;
 
-    if(! ( img->load(filename) ) )
+    if (!(img->load(filename)))
     {
         QMessageBox::information(this,
                                  tr("error message"),
@@ -1854,7 +2099,10 @@ void main_window::laod_collage(){
  * ------------------------------------------------
  * Initiallize all the components.
  */
-void main_window::initialization(){
+void main_window::initialization()
+{
+    // spinBox_bw->disconnect(this);
+    // slider_bw->disconnect(this);
     spinBox1->disconnect(this);
     slider1->disconnect(this);
     spinBox2->disconnect(this);
@@ -1869,6 +2117,7 @@ void main_window::initialization(){
     slider_eye->disconnect(this);
     spinBox_eye->disconnect(this);
     slider_eye->disconnect(this);
+    // spinBox_bw->setValue(0);
     spinBox1->setValue(50);
     spinBox2->setValue(0);
     spinBox_blur->setValue(0);
@@ -1881,7 +2130,6 @@ void main_window::initialization(){
     spinBoxText->disconnect(this);
     textEdt->disconnect(this);
     crop_Button->disconnect(this);
-
 }
 
 //text function part
@@ -1891,13 +2139,15 @@ void main_window::initialization(){
  * Set properties of components of text function. Allow hide or show
  * of components for text function.
  */
-void main_window:: Show_text(){
+void main_window::Show_text()
+{
     textEdt->setVisible(true);
     spinBoxText->setVisible(true);
     spinBoxText->setValue(20);
 }
 
-void main_window:: Hide_text(){
+void main_window::Hide_text()
+{
     textEdt->setVisible(false);
     spinBoxText->setVisible(false);
 }
@@ -1910,24 +2160,25 @@ void main_window:: Hide_text(){
  * and TextSizeEdit(int) is called after the value in the
  * spinBoxText is changed.
  */
-void main_window::text(){
+void main_window::text()
+{
     spinBoxText->disconnect(this);
     textEdt->disconnect(this);
     main_screen->set_m_text(true);
-    connect( spinBoxText, SIGNAL(valueChanged(int)), this, SLOT(TextSizeEdit(int)));
-    connect( textEdt, SIGNAL(returnPressed()), this, SLOT( TextEdit()) );
+    connect(spinBoxText, SIGNAL(valueChanged(int)), this, SLOT(TextSizeEdit(int)));
+    connect(textEdt, SIGNAL(returnPressed()), this, SLOT(TextEdit()));
 }
 
-void main_window::TextEdit(){
-    main_screen->set_text_content( textEdt->text());
+void main_window::TextEdit()
+{
+    main_screen->set_text_content(textEdt->text());
 }
 
-void main_window::TextSizeEdit(int size){
+void main_window::TextSizeEdit(int size)
+{
     int textSize_value = size;
     main_screen->set_text_size(textSize_value);
 }
-
-
 
 void main_window::mouseMoveEvent(QMouseEvent *event)
 {
@@ -1950,50 +2201,49 @@ void main_window::mousePressEvent(QMouseEvent *event)
     }
 }
 
-
 //format change between QImage & cvMat
-Mat QImage2cvMat(QImage image) {
+Mat QImage2cvMat(QImage image)
+{
     cv::Mat mat;
     cv::Mat dst;
 
     qDebug() << image.format();
-    switch(image.format())
+    switch (image.format())
     {
     case QImage::Format_ARGB32:
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32_Premultiplied:
 
         image = image.convertToFormat(QImage::Format_RGB888);
-        mat = cv::Mat(image.height(), image.width(), CV_8UC3, (void*)image.constBits(), image.bytesPerLine());
+        mat = cv::Mat(image.height(), image.width(), CV_8UC3, (void *)image.constBits(), image.bytesPerLine());
         cv::cvtColor(mat, dst, COLOR_BGR2RGB);
         break;
     case QImage::Format_RGB888:
-        mat = cv::Mat(image.height(), image.width(), CV_8UC3, (void*)image.constBits(), image.bytesPerLine());
+        mat = cv::Mat(image.height(), image.width(), CV_8UC3, (void *)image.constBits(), image.bytesPerLine());
         cv::cvtColor(mat, dst, COLOR_BGR2RGB);
         break;
     case QImage::Format_Indexed8:
-        mat = cv::Mat(image.height(), image.width(), CV_8UC1, (void*)image.constBits(), image.bytesPerLine());
+        mat = cv::Mat(image.height(), image.width(), CV_8UC1, (void *)image.constBits(), image.bytesPerLine());
         break;
     }
     return dst;
-
 }
 
-QImage cvMat2QImage(const cv::Mat& mat)
+QImage cvMat2QImage(const cv::Mat &mat)
 {
     // 8-bits unsigned, NO. OF CHANNELS = 1
-    if(mat.type() == CV_8UC1)
+    if (mat.type() == CV_8UC1)
     {
         QImage image(mat.cols, mat.rows, QImage::Format_Indexed8);
         // Set the color table (used to translate colour indexes to qRgb values)
         image.setColorCount(256);
-        for(int i = 0; i < 256; i++)
+        for (int i = 0; i < 256; i++)
         {
             image.setColor(i, qRgb(i, i, i));
         }
         // Copy input Mat
         uchar *pSrc = mat.data;
-        for(int row = 0; row < mat.rows; row ++)
+        for (int row = 0; row < mat.rows; row++)
         {
             uchar *pDest = image.scanLine(row);
             memcpy(pDest, pSrc, mat.cols);
@@ -2002,19 +2252,19 @@ QImage cvMat2QImage(const cv::Mat& mat)
         return image;
     }
     // 8-bits unsigned, NO. OF CHANNELS = 3
-    else if(mat.type() == CV_8UC3)
+    else if (mat.type() == CV_8UC3)
     {
         // Copy input Mat
-        cvtColor(mat, mat,COLOR_BGR2RGB);
-        const uchar *pSrc = (const uchar*)mat.data;
+        cvtColor(mat, mat, COLOR_BGR2RGB);
+        const uchar *pSrc = (const uchar *)mat.data;
         // Create QImage with same dimensions as input Mat
         QImage image(pSrc, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
         return image;
     }
-    else if(mat.type() == CV_8UC4)
+    else if (mat.type() == CV_8UC4)
     {
         // Copy input Mat
-        const uchar *pSrc = (const uchar*)mat.data;
+        const uchar *pSrc = (const uchar *)mat.data;
         // Create QImage with same dimensions as input Mat
         QImage image(pSrc, mat.cols, mat.rows, mat.step, QImage::Format_ARGB32);
         return image.copy();

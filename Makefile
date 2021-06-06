@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Mini-PhotoShop1.0.0
-DISTDIR = /home/hichens/Downloads/Mini-PhotoShop/.tmp/Mini-PhotoShop1.0.0
+DISTDIR = /home/hichens/Documents/Mini-PhotoShop/.tmp/Mini-PhotoShop1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/local/lib -lopencv_gapi -lopencv_highgui -lopencv_ml -lopencv_objdetect -lopencv_photo -lopencv_stitching -lopencv_video -lopencv_calib3d -lopencv_features2d -lopencv_dnn -lopencv_flann -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -65,7 +65,7 @@ SOURCES       = main.cpp \
 		basicfilter.cpp \
 		noise.cpp \
 		crop.cpp \
-		median_blur.cpp \
+		blur.cpp \
 		graph_scene.cpp \
 		add_sticker.cpp \
 		mosaic.cpp \
@@ -90,7 +90,7 @@ OBJECTS       = main.o \
 		basicfilter.o \
 		noise.o \
 		crop.o \
-		median_blur.o \
+		blur.o \
 		graph_scene.o \
 		add_sticker.o \
 		mosaic.o \
@@ -159,6 +159,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -189,7 +190,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		advancedfilter.h \
 		basicfilter.h \
 		noise.h \
-		median_blur.h \
+		blur.h \
 		graph_scene.h \
 		big_eye.h \
 		add_frame.h \
@@ -206,7 +207,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		basicfilter.cpp \
 		noise.cpp \
 		crop.cpp \
-		median_blur.cpp \
+		blur.cpp \
 		graph_scene.cpp \
 		add_sticker.cpp \
 		mosaic.cpp \
@@ -282,6 +283,7 @@ Makefile: Mini-PhotoShop.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qma
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -360,6 +362,7 @@ Makefile: Mini-PhotoShop.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qma
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -397,8 +400,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents images.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents main_window.h button.h blackwhite.h brightness.h contrast.h fliter_color.h saturation.h rotate.h advancedfilter.h basicfilter.h noise.h median_blur.h graph_scene.h big_eye.h add_frame.h collage.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp main_window.cpp button.cpp blackwhite.cpp brightness.cpp contrast.cpp fliter_color.cpp saturation.cpp rotate.cpp advancedfilter.cpp basicfilter.cpp noise.cpp crop.cpp median_blur.cpp graph_scene.cpp add_sticker.cpp mosaic.cpp big_eye.cpp change_background.cpp add_frame.cpp text.cpp collage.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents main_window.h button.h blackwhite.h brightness.h contrast.h fliter_color.h saturation.h rotate.h advancedfilter.h basicfilter.h noise.h blur.h graph_scene.h big_eye.h add_frame.h collage.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp main_window.cpp button.cpp blackwhite.cpp brightness.cpp contrast.cpp fliter_color.cpp saturation.cpp rotate.cpp advancedfilter.cpp basicfilter.cpp noise.cpp crop.cpp blur.cpp graph_scene.cpp add_sticker.cpp mosaic.cpp big_eye.cpp change_background.cpp add_frame.cpp text.cpp collage.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents main_window.ui $(DISTDIR)/
 
 
@@ -463,6 +466,7 @@ qrc_images.cpp: images.qrc \
 		images/Sticker3.png \
 		images/f_old.png \
 		images/fr_Black.png \
+		images/start.png \
 		images/red.png \
 		images/crop.png \
 		images/colorFilter_press.png \
@@ -572,22 +576,22 @@ moc_main_window.cpp: main_window.h \
 		advancedfilter.h \
 		noise.h \
 		graph_scene.h \
-		median_blur.h \
+		blur.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hichens/Downloads/Mini-PhotoShop/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hichens/Downloads/Mini-PhotoShop -I/usr/local/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include main_window.h -o moc_main_window.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hichens/Documents/Mini-PhotoShop/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hichens/Documents/Mini-PhotoShop -I/usr/local/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include main_window.h -o moc_main_window.cpp
 
 moc_button.cpp: button.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hichens/Downloads/Mini-PhotoShop/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hichens/Downloads/Mini-PhotoShop -I/usr/local/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include button.h -o moc_button.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hichens/Documents/Mini-PhotoShop/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hichens/Documents/Mini-PhotoShop -I/usr/local/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include button.h -o moc_button.cpp
 
 moc_graph_scene.cpp: graph_scene.h \
 		button.h \
 		ui_main_window.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hichens/Downloads/Mini-PhotoShop/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hichens/Downloads/Mini-PhotoShop -I/usr/local/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include graph_scene.h -o moc_graph_scene.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/hichens/Documents/Mini-PhotoShop/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/hichens/Documents/Mini-PhotoShop -I/usr/local/include/opencv4 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include graph_scene.h -o moc_graph_scene.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -623,7 +627,7 @@ main.o: main.cpp main_window.h \
 		advancedfilter.h \
 		noise.h \
 		graph_scene.h \
-		median_blur.h
+		blur.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 main_window.o: main_window.cpp main_window.h \
@@ -639,7 +643,7 @@ main_window.o: main_window.cpp main_window.h \
 		advancedfilter.h \
 		noise.h \
 		graph_scene.h \
-		median_blur.h \
+		blur.h \
 		big_eye.h \
 		collage.h \
 		add_frame.h
@@ -680,8 +684,8 @@ crop.o: crop.cpp graph_scene.h \
 		ui_main_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o crop.o crop.cpp
 
-median_blur.o: median_blur.cpp median_blur.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o median_blur.o median_blur.cpp
+blur.o: blur.cpp blur.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blur.o blur.cpp
 
 graph_scene.o: graph_scene.cpp graph_scene.h \
 		button.h \

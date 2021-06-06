@@ -41,7 +41,7 @@ SOURCES += \
     basicfilter.cpp \
     noise.cpp \
     crop.cpp \
-    median_blur.cpp \
+    blur.cpp \
     graph_scene.cpp \
     add_sticker.cpp \
     mosaic.cpp \
@@ -63,7 +63,7 @@ HEADERS += \
     advancedfilter.h \
     basicfilter.h \
     noise.h \
-    median_blur.h \
+    blur.h \
     graph_scene.h \
     big_eye.h \
     add_frame.h\
