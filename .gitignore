@@ -34,4 +34,7 @@
 
 # Others
 .vscode
+qrc_images.cpp
 Mini-PhotoShop
+Makefile
+
