@@ -23,6 +23,7 @@ using namespace std;
 
 /*Constant Value*/
 int BLUR_OPT = 1;
+int BW_OPT = 1;
 
 /*
  * Implementation notes: main_window constructor
@@ -142,7 +143,7 @@ void main_window::setMainButtons()
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Mosaic()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Frame()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
-    // connect(return_Button, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(return_Button, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(return_Button, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
@@ -209,7 +210,7 @@ void main_window::setMainButtons()
     connect(ui->load_button, SIGNAL(clicked()), this, SLOT(add_image_button()));
 
     //rotate
-    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
     connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
@@ -230,7 +231,7 @@ void main_window::setMainButtons()
 
     //black_white
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Tool_blackwhite()));
-    // connect(tool_button_BR, SIGNAL(released()), this, SLOT(Show_BW_Slider()));
+    connect(tool_button_BW, SIGNAL(released()), this, SLOT(Show_BW_Slider()));
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
     connect(tool_button_BW, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
@@ -242,7 +243,7 @@ void main_window::setMainButtons()
     //Brightness
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Tool_brightness()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Show_Bright_Slider()));
-    // connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
     connect(tool_button_BR, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
@@ -255,7 +256,7 @@ void main_window::setMainButtons()
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Show_Contrast_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
-    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
     connect(tool_button_CT, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
@@ -274,7 +275,7 @@ void main_window::setMainButtons()
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Tool_saturation()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Blur_Slider()));
-    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
     connect(tool_button_ST, SIGNAL(released()), this, SLOT(Show_Saturation_Slider()));
@@ -286,7 +287,7 @@ void main_window::setMainButtons()
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Show_Blur_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Contrast_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Saturation_Slider()));
-    // connect(tool_button_RT, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
+    connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_BW_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Bright_Slider()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_FilterColor_Button()));
     connect(tool_button_BL, SIGNAL(released()), this, SLOT(Hide_Rotate_Button()));
@@ -301,14 +302,28 @@ void main_window::setMainButtons()
 void main_window::setAddition()
 {
     //black & white
-    // ui->horizontalLayout->addWidget(spinBox_bw);
-    // ui->horizontalLayout->addWidget(slider_bw);
-    // spinBox_bw->setRange(0, 255);
-    // slider_bw->setRange(0, 255);
-    // connect(spinBox_bw, SIGNAL(valueChanged(int)), slider_bw, SLOT(setValue(int)));
-    // connect(slider_bw, SIGNAL(valueChanged(int)), spinBox_bw, SLOT(setValue(int)));
-    // spinBox_bw->setVisible(false);
-    // slider_bw->setVisible(false);
+    ui->horizontalLayout->addWidget(binary_Button);
+    ui->horizontalLayout->addWidget(otsu_Button);
+    ui->horizontalLayout->addWidget(spinBox_bw);
+    ui->horizontalLayout->addWidget(slider_bw);
+
+    binary_Button->setIconSize(QSize(80, 40));
+    otsu_Button->setIconSize(QSize(80, 40));
+
+    spinBox_bw->setRange(0, 255);
+    slider_bw->setRange(0, 255);
+    binary_Button->setText("Binary");
+    otsu_Button->setText("OTSU");
+
+    connect(binary_Button, SIGNAL(released()), this, SLOT(Tool_blackwhite()));
+    connect(otsu_Button, SIGNAL(released()), this, SLOT(Tool_blackwhite()));
+    connect(spinBox_bw, SIGNAL(valueChanged(int)), slider_bw, SLOT(setValue(int)));
+    connect(slider_bw, SIGNAL(valueChanged(int)), spinBox_bw, SLOT(setValue(int)));
+
+    binary_Button->setVisible(false);
+    otsu_Button->setVisible(false);
+    spinBox_bw->setVisible(false);
+    slider_bw->setVisible(false);
     
     //brightness
     ui->horizontalLayout->addWidget(spinBox1);
@@ -674,7 +689,7 @@ void main_window::add_image_button()
     Fheight = Oheight / Mul;
 
     *scaledimg = img->scaled(Fwidth, Fheight, Qt::KeepAspectRatio);
-    std::cout << i << std::endl;
+    // std::cout << i << std::endl;
     listButtons[i]->setFixedSize(QSize(55, 55));
     listButtons[i]->setIcon(QPixmap::fromImage(*img));
     listButtons[i]->setIconSize(QSize(Fwidth, Fheight));
@@ -909,16 +924,20 @@ void main_window::Show_Tool()
  *  brightness, contrast, blur, saturation, crop, color filter, rotation
  */
 
-// void main_window::Hide_BW_Slider()
-// {
-//     spinBox_bw->setVisible(false);
-//     slider_bw->setVisible(false);
-// }
-// void main_window::Show_BW_Slider()
-// {
-//     spinBox_bw->setVisible(true);
-//     slider_bw->setVisible(true);
-// }
+void main_window::Hide_BW_Slider()
+{
+    binary_Button->setVisible(false);
+    otsu_Button->setVisible(false);
+    spinBox_bw->setVisible(false);
+    slider_bw->setVisible(false);
+}
+void main_window::Show_BW_Slider()
+{
+    binary_Button->setVisible(true);
+    otsu_Button->setVisible(true);
+    spinBox_bw->setVisible(true);
+    slider_bw->setVisible(true);
+}
 
 void main_window::Hide_Bright_Slider()
 {
@@ -1027,19 +1046,20 @@ void main_window::Show_Rotate_Button()
  */
 void main_window::Tool_blackwhite()
 {
-    // spinBox_bw->disconnect(this);
-    // slider_bw->disconnect(this);
-    // Temp_main_pic = QImage2cvMat(*main_pic).clone();
-    // spinBox_bw->setValue(0);
-    // connect(spinBox_bw, SIGNAL(valueChanged(int)), this, SLOT(temp_blackwhite()));
 
-    Mat img = QImage2cvMat(*main_pic);
-    Mat bw_img;
-    // std::cout<<img.dims<<" "<<img.channels()<<endl;
-    if(img.channels() == 3)
-        bw_img = blackwhite(img, 100);
-    *main_pic = cvMat2QImage(bw_img);
-    display_screen();
+    if (sender() == binary_Button){
+        BW_OPT = 1;
+    }
+    if (sender() == otsu_Button){
+        BW_OPT = 2;
+    }
+    cout<<"BW_OPT: "<<BW_OPT<<endl;
+    spinBox_bw->disconnect(this);
+    slider_bw->disconnect(this);
+    Temp_main_pic = QImage2cvMat(*main_pic).clone();
+    spinBox_bw->setValue(0);
+    connect(spinBox_bw, SIGNAL(valueChanged(int)), this, SLOT(temp_blackwhite()));
+
 }
 
 /*
@@ -1060,15 +1080,18 @@ void main_window::Tool_crop()
  * will be called to invoking brightness function and
  * adjuest the brightness of the picture
  */
-// void main_window::temp_blackwhite()
-// {
-//     int bw_value = spinBox_bw->value();
-//     Mat bw_img;
-//     if(img.channels() == 3)
-//         bw_img = blackwhite(Temp_main_pic, bw_value);
-//     *main_pic = cvMat2QImage(bw_img);
-//     display_screen();
-// }
+void main_window::temp_blackwhite()
+{
+    int bw_value = spinBox_bw->value();
+    Mat bw_img;
+    // cout<<Temp_main_pic.channels()<<endl;
+    if(Temp_main_pic.channels() == 3)
+        bw_img = blackwhite(Temp_main_pic, bw_value, BW_OPT);
+    else
+        bw_img = Temp_main_pic.clone();
+    *main_pic = cvMat2QImage(bw_img);
+    display_screen();
+}
 
 void main_window::temp_brightness()
 {
@@ -1171,7 +1194,7 @@ void main_window::Tool_blur()
     else if(sender() == mean_blur_Button){
         BLUR_OPT = 3;
     }
-    cout<<BLUR_OPT<<endl;
+    cout<<"BLUR_OPT"<<BLUR_OPT<<endl;
     spinBox_blur->disconnect(this);
     slider_blur->disconnect(this);
     Temp_main_pic = QImage2cvMat(*main_pic).clone();
@@ -2101,8 +2124,8 @@ void main_window::laod_collage()
  */
 void main_window::initialization()
 {
-    // spinBox_bw->disconnect(this);
-    // slider_bw->disconnect(this);
+    spinBox_bw->disconnect(this);
+    slider_bw->disconnect(this);
     spinBox1->disconnect(this);
     slider1->disconnect(this);
     spinBox2->disconnect(this);
@@ -2117,7 +2140,7 @@ void main_window::initialization()
     slider_eye->disconnect(this);
     spinBox_eye->disconnect(this);
     slider_eye->disconnect(this);
-    // spinBox_bw->setValue(0);
+    spinBox_bw->setValue(0);
     spinBox1->setValue(50);
     spinBox2->setValue(0);
     spinBox_blur->setValue(0);

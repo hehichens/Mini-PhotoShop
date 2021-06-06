@@ -37,10 +37,13 @@ using namespace std;
 // }
 
 
-Mat blackwhite(Mat org, int k){
+Mat blackwhite(Mat org, int k, int opt){
   // int k = 30;
   Mat dst;
   cvtColor(org, dst, CV_BGR2GRAY);
-  threshold(dst, dst, k, 255, CV_THRESH_BINARY);
+  if(opt == 1)
+      threshold(dst, dst, k, 255, CV_THRESH_BINARY);
+  else
+      threshold(dst, dst, k, 255, CV_THRESH_OTSU);
   return dst;
 }

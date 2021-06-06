@@ -40,7 +40,7 @@
 
 /*Constant Value*/
 extern int BLUR_OPT;
-
+extern int BW_OPT;
 
 namespace Ui
 {
@@ -249,8 +249,10 @@ private:
 
     /*inside Tool*/
     //B&W
-    // QSpinBox *spinBox_bw = new QSpinBox();
-    // QSlider *slider_bw = new QSlider(Qt::Horizontal);
+    QPushButton *binary_Button = new QPushButton();
+    QPushButton *otsu_Button = new QPushButton();
+    QSpinBox *spinBox_bw = new QSpinBox();
+    QSlider *slider_bw = new QSlider(Qt::Horizontal);
     
     //brightness
     QSpinBox *spinBox1 = new QSpinBox();
@@ -368,8 +370,8 @@ private slots:
     void Hide_Tool();
     void Show_Tool();
 
-    // void Hide_BW_Slider();
-    // void Show_BW_Slider();
+    void Hide_BW_Slider();
+    void Show_BW_Slider();
 
     void Hide_Bright_Slider();
     void Show_Bright_Slider();
@@ -393,7 +395,7 @@ private slots:
     void Show_crop();
 
     void Tool_blackwhite();
-    // void temp_blackwhite();
+    void temp_blackwhite();
     void Tool_brightness();
     void temp_brightness();
     void Tool_contrast();
